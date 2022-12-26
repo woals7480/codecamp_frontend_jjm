@@ -26,20 +26,8 @@ import {
 } from "../../../styles/emotion";
 
 const CREATE_BOARD = gql`
-  mutation boardType(
-    $writer: String
-    $password: String
-    $title: String!
-    $contents: String!
-  ) {
-    createBoard(
-      createBoardInput: {
-        writer: $writer
-        password: $password
-        title: $title
-        contents: $contents
-      }
-    ) {
+  mutation boardType($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
       _id
       writer
       title
@@ -105,10 +93,12 @@ export default function BoardsNew() {
     if (writer && password && title && contents) {
       const result = await createBoard({
         variables: {
-          writer: writer,
-          password: password,
-          title: title,
-          contents: contents,
+          createBoardInput: {
+            writer,
+            password,
+            title,
+            contents,
+          },
         },
       });
       console.log(result);
@@ -188,5 +178,3 @@ export default function BoardsNew() {
     </Wrapper>
   );
 }
-
-//test
