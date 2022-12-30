@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 
-export default function BoardWrite() {
+export default function BoardWrite(props) {
   const router = useRouter();
   const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
+
+  const [isActive, setIsActive] = useState(false);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
@@ -23,12 +26,22 @@ export default function BoardWrite() {
     if (writer !== "") {
       setWriterError("");
     }
+    if (event.target.value && password && title && contents) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
   };
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
     if (password !== "") {
       setPasswordError("");
+    }
+    if (writer && event.target.value && title && contents) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
     }
   };
 
@@ -37,12 +50,23 @@ export default function BoardWrite() {
     if (title !== "") {
       setTitleError("");
     }
+    if (writer && password && event.target.value && contents) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
   };
 
   const onChangeContents = (event) => {
     setContents(event.target.value);
     if (contents !== "") {
       setContentsError("");
+    }
+
+    if (writer && password && title && event.target.value) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
     }
   };
 
@@ -79,6 +103,26 @@ export default function BoardWrite() {
       }
     }
   };
+
+  const onClickUpdate = async () => {
+    const updateInput = {};
+
+    if (title) updateInput.title = title;
+    if (contents) updateInput.contents = contents;
+
+    try {
+      const result = await updateBoard({
+        variables: {
+          boardId: router.query.boardId,
+          password: password,
+          updateBoardInput: updateInput,
+        },
+      });
+      router.push(`/boards/${result.data.updateBoard._id}`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <BoardWriteUI
       writerError={writerError}
@@ -90,6 +134,10 @@ export default function BoardWrite() {
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
+      onClickUpdate={onClickUpdate}
+      isActive={isActive}
+      isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }

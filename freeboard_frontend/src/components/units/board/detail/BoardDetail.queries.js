@@ -7,6 +7,13 @@ export const FETCH_BOARD = gql`
       title
       contents
       createdAt
+      _id
     }
+  }
+`;
+
+export const DELETE_BOARD = gql`
+  mutation deleteBoard($boardId: ID!) {
+    deleteBoard(boardId: $boardId)
   }
 `;

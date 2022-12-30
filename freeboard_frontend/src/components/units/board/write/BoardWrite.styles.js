@@ -138,7 +138,7 @@ export const ButtonWrapper = styled.div`
 export const SubmitButton = styled.button`
   width: 179px;
   height: 52px;
-  background-color: yellow;
+  background-color: ${(props) => (props.isActive ? "gold" : "default")};
   border: none;
   cursor: pointer;
 `;
