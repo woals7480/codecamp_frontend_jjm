@@ -9,11 +9,11 @@ export default function BoardList() {
   const router = useRouter();
 
   const onClickMoveToBoardNew = () => {
-    router.push("/boards/new");
+    void router.push("/boards/new");
   };
 
   const onClickonBoardDetail = (event: MouseEvent<HTMLDivElement>) => {
-    router.push(`/boards/${event.currentTarget.id}`);
+    void router.push(`/boards/${event.currentTarget.id}`);
   };
   return (
     <BoardListUI

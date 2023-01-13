@@ -1,5 +1,7 @@
 import { IQuery } from "../../../../commons/types/generated/types";
 import { ChangeEvent } from "react";
+import { Address } from "react-daum-postcode";
+
 export interface IBoardWriteProps {
   isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
@@ -8,6 +10,12 @@ export interface IBoardWriteProps {
 export interface IUpdateInputProps {
   title?: string;
   contents?: string;
+  youtubeUrl?: string;
+  boardAddress?: {
+    zipcode?: string;
+    address?: string;
+    addressDetail?: string;
+  };
 }
 
 export interface IBoardWriteUIProps {
@@ -19,10 +27,17 @@ export interface IBoardWriteUIProps {
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
   isActive: boolean;
   isEdit: boolean;
+  isOpen: boolean;
+  onCompleteAddressSearch: (data: Address) => void;
+  onToggleModal: () => void;
+  zipcode: string;
+  address: string;
   data?: Pick<IQuery, "fetchBoard">;
 }
 

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Rate } from "antd";
 
 export const CommentWrapper = styled.div`
   width: 1200px;
@@ -26,7 +27,16 @@ export const WriterRating = styled.div`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 `;
+
+export const CommentRating = styled(Rate)`
+  font-size: 20px;
+  margin-left: 18px;
+`;
+
+export const Writer = styled.div``;
 
 export const Contents = styled.div`
   margin-bottom: 20px;

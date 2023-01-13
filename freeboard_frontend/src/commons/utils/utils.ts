@@ -1,4 +1,4 @@
-export const getDate = (createdAt) => {
+export const getDate = (createdAt: any) => {
   const date = new Date(createdAt);
   const yyyy = date.getFullYear();
   const mm = String(date.getMonth() + 1).padStart(2, "0");

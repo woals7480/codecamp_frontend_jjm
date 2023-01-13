@@ -10,7 +10,10 @@ export default function BoardCommentListUI(props: IBoardCommentListUIProps) {
           <S.MainWrapper>
             <S.Avatar src="/images/avatar.png" />
             <S.CommentInfo>
-              <S.WriterRating>{el.writer}</S.WriterRating>
+              <S.WriterRating>
+                <S.Writer>{el.writer}</S.Writer>
+                <S.CommentRating disabled value={el.rating} />
+              </S.WriterRating>
               <S.Contents>{el.contents}</S.Contents>
               <S.CreatedAt>{getDate(el?.createdAt)}</S.CreatedAt>
             </S.CommentInfo>

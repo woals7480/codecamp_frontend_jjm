@@ -9,6 +9,8 @@ import {
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
+import { Address } from "react-daum-postcode";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -22,11 +24,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
   >(UPDATE_BOARD);
 
   const [isActive, setIsActive] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -82,6 +89,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
 
+  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(event.target.value);
+  };
+
+  const onChangeYoutubeUrl = (event: ChangeEvent<HTMLInputElement>) => {
+    setYoutubeUrl(event.target.value);
+  };
+
   const onClickSubmit = async () => {
     if (!writer) {
       setWriterError("작성자를 입력해주세요.");
@@ -104,14 +119,20 @@ export default function BoardWrite(props: IBoardWriteProps) {
               password,
               title,
               contents,
+              youtubeUrl,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
             },
           },
         });
         console.log(result);
-        alert("게시글이 등록이 되었습니다.");
-        router.push(`${result?.data?.createBoard._id}`);
-      } catch (error: any) {
-        alert(error.message);
+        Modal.success({ content: "게시글을 등록하셨습니다." });
+        void router.push(`${result?.data?.createBoard._id ?? ""}`);
+      } catch (error) {
+        if (error instanceof Error) Modal.error({ content: error.message });
       }
     }
   };
@@ -121,20 +142,39 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
     if (title) updateInput.title = title;
     if (contents) updateInput.contents = contents;
+    if (youtubeUrl) updateInput.youtubeUrl = youtubeUrl;
+
+    if (zipcode || address || addressDetail) {
+      updateInput.boardAddress = {};
+      if (zipcode) updateInput.boardAddress.zipcode = zipcode;
+      if (address) updateInput.boardAddress.address = address;
+      if (addressDetail) updateInput.boardAddress.addressDetail = addressDetail;
+    }
 
     try {
       const result = await updateBoard({
         variables: {
           boardId: String(router.query.boardId),
-          password: password,
+          password,
           updateBoardInput: updateInput,
         },
       });
-      router.push(`/boards/${result?.data?.updateBoard._id}`);
+      void router.push(`/boards/${result?.data?.updateBoard._id ?? ""}`);
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
+
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onCompleteAddressSearch = (data: Address) => {
+    setZipcode(data.zonecode);
+    setAddress(data.address);
+    onToggleModal();
+  };
+
   return (
     <BoardWriteUI
       writerError={writerError}
@@ -147,8 +187,15 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
+      onCompleteAddressSearch={onCompleteAddressSearch}
+      onToggleModal={onToggleModal}
+      onChangeAddressDetail={onChangeAddressDetail}
+      onChangeYoutubeUrl={onChangeYoutubeUrl}
       isActive={isActive}
       isEdit={props.isEdit}
+      isOpen={isOpen}
+      zipcode={zipcode}
+      address={address}
       data={props.data}
     />
   );

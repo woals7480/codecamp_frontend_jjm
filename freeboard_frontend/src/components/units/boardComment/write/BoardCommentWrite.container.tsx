@@ -8,12 +8,14 @@ import {
   IMutation,
   IMutationCreateBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
+import { Modal } from "antd";
 
 export default function BoardCommentWrite() {
   const router = useRouter();
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
+  const [rating, setRating] = useState(0);
 
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
@@ -29,6 +31,7 @@ export default function BoardCommentWrite() {
   const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
   };
+
   const onClickWrite = async () => {
     try {
       await createBoardComment({
@@ -37,7 +40,7 @@ export default function BoardCommentWrite() {
             writer,
             password,
             contents,
-            rating: 0,
+            rating,
           },
           boardId: String(router.query.boardId),
         },
@@ -48,9 +51,9 @@ export default function BoardCommentWrite() {
           },
         ],
       });
-      alert("댓글이 등록되었습니다.");
+      Modal.success({ content: "댓글이 등록되었습니다." });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
@@ -61,6 +64,7 @@ export default function BoardCommentWrite() {
       onChangeContents={onChangeContents}
       onClickWrite={onClickWrite}
       contents={contents}
+      setRating={setRating}
     />
   );
 }

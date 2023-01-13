@@ -12,6 +12,7 @@ import {
   FETCH_BOARDCOMMENTS,
 } from "./BoardCommentList.querie";
 import { MouseEvent } from "react";
+import { Modal } from "antd";
 
 export default function BoardCommentList() {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function BoardCommentList() {
       await deleteBoardComment({
         variables: {
           password: myPassword,
-          boardCommentId: event.target.id,
+          boardCommentId: event.currentTarget.id,
         },
         refetchQueries: [
           {
@@ -44,8 +45,9 @@ export default function BoardCommentList() {
           },
         ],
       });
+      Modal.success({ content: "댓글이 삭제되었습니다." });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
