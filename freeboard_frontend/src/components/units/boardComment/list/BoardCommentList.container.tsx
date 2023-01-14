@@ -17,7 +17,7 @@ import { Modal } from "antd";
 export default function BoardCommentList() {
   const router = useRouter();
 
-  const { data } = useQuery<
+  const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs
   >(FETCH_BOARDCOMMENTS, {
@@ -51,5 +51,34 @@ export default function BoardCommentList() {
     }
   };
 
-  return <BoardCommentListUI data={data} onClickDelete={onClickDelete} />;
+  const onLoadMore = () => {
+    if (data === undefined) return;
+
+    void fetchMore({
+      variables: {
+        page: Math.ceil(data?.fetchBoardComments.length / 10) + 1,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (fetchMoreResult.fetchBoardComments === undefined) {
+          return {
+            fetchBoardComments: [...prev.fetchBoardComments],
+          };
+        }
+        return {
+          fetchBoardComments: [
+            ...prev.fetchBoardComments,
+            ...fetchMoreResult.fetchBoardComments,
+          ],
+        };
+      },
+    });
+  };
+
+  return (
+    <BoardCommentListUI
+      data={data}
+      onClickDelete={onClickDelete}
+      onLoadMore={onLoadMore}
+    />
+  );
 }
