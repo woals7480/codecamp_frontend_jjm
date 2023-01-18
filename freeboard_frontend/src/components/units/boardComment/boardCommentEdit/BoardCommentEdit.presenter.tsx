@@ -1,4 +1,4 @@
-import { getDate } from "../../../commons/utils/utils";
+import { getDate } from "../../../../commons/utils/utils";
 import * as S from "./BoardCommentEdit.styes";
 import { IBoardCommentEditUIProps } from "./BoardCommentEdit.types";
 
@@ -58,7 +58,7 @@ export default function BoardCommentEditUI(props: IBoardCommentEditUIProps) {
               defaultValue={props.el.contents}
             />
             <S.BottomWrapper>
-              <S.ContentsLength>/100</S.ContentsLength>
+              <S.ContentsLength>{props.contents.length}/100</S.ContentsLength>
               <S.Button onClick={props.onClickUpdate}>수정하기</S.Button>
             </S.BottomWrapper>
           </S.ContentsWrapper>

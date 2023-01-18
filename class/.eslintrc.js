@@ -14,5 +14,8 @@ module.exports = {
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/triple-slash-reference": "off",
   },
 };

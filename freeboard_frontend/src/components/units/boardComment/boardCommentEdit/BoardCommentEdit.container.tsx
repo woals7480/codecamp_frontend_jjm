@@ -8,12 +8,12 @@ import {
   IMutation,
   IMutationDeleteBoardCommentArgs,
   IMutationUpdateBoardCommentArgs,
-} from "../../../commons/types/generated/types";
+} from "../../../../commons/types/generated/types";
 import {
   DELETE_BOARDCOMMENT,
   UPDATE_BOARDCOMMENT,
 } from "./BoardCommentEdit.queried";
-import { FETCH_BOARDCOMMENTS } from "../boardComment/list/BoardCommentList.querie";
+import { FETCH_BOARDCOMMENTS } from "../list/BoardCommentList.querie";
 
 export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
   const router = useRouter();
@@ -96,6 +96,7 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
       el={props.el}
       isEdit={isEdit}
       setRating={setRating}
+      contents={contents}
       onClickDelete={onClickDelete}
       onClickUpdateIcon={onClickUpdateIcon}
       onChangePassword={onChangePassword}

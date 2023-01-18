@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "ts-node"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "apollo-server": "^3.11.1",
+    "graphql": "^16.6.0",
+    "pg": "^8.8.0",
+    "ts-node": "^10.9.1",
+    "typeorm": "^0.3.11"
+  }
+}
