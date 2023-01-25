@@ -37,6 +37,16 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
               width="486px"
               height="240px"
             />
+            <S.ImageWrapper>
+              {props.data?.fetchBoard.images
+                ?.filter((el: string) => el)
+                .map((el: string) => (
+                  <S.Image
+                    src={`https://storage.googleapis.com/${el}`}
+                    key={el}
+                  />
+                ))}
+            </S.ImageWrapper>
           </S.TitleContentWrapper>
           <S.LikeWrapper>
             <S.LikeIconWrapper>

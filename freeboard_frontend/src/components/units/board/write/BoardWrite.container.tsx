@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import BoardWriteUI from "./BoardWrite.presenter";
@@ -34,6 +34,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [fileUrls, setFileUrls] = useState(["", "", ""]);
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -97,6 +98,18 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setYoutubeUrl(event.target.value);
   };
 
+  const onChangeFileUrls = (fileUrl: string, index: number) => {
+    const newFileUrls = [...fileUrls];
+    newFileUrls[index] = fileUrl;
+    setFileUrls(newFileUrls);
+  };
+
+  useEffect(() => {
+    if (props.data?.fetchBoard.images?.length) {
+      setFileUrls([...props.data.fetchBoard.images]);
+    }
+  }, [props.data]);
+
   const onClickSubmit = async () => {
     if (!writer) {
       setWriterError("작성자를 입력해주세요.");
@@ -125,6 +138,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
                 address,
                 addressDetail,
               },
+              images: [...fileUrls],
             },
           },
         });
@@ -138,6 +152,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onClickUpdate = async () => {
+    const currentFiles = JSON.stringify(fileUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
+    const isChangeFiles = currentFiles !== defaultFiles;
+
     const updateInput: IUpdateInputProps = {};
 
     if (title) updateInput.title = title;
@@ -150,6 +168,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       if (address) updateInput.boardAddress.address = address;
       if (addressDetail) updateInput.boardAddress.addressDetail = addressDetail;
     }
+
+    if (isChangeFiles) updateInput.images = fileUrls;
 
     try {
       const result = await updateBoard({
@@ -191,11 +211,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onToggleModal={onToggleModal}
       onChangeAddressDetail={onChangeAddressDetail}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
+      onChangeFileUrls={onChangeFileUrls}
       isActive={isActive}
       isEdit={props.isEdit}
       isOpen={isOpen}
       zipcode={zipcode}
       address={address}
+      fileUrls={fileUrls}
       data={props.data}
     />
   );

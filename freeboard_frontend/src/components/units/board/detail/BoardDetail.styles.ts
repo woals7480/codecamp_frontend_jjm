@@ -64,7 +64,6 @@ export const LocationIcon = styled.img`
 
 export const Body = styled.div`
   width: 100%;
-  height: 800px;
   padding: 0 20px;
   display: flex;
   flex-direction: column;
@@ -84,6 +83,18 @@ export const Contents = styled.div`
 
 export const Youtube = styled(ReactPlayer)`
   margin: auto;
+`;
+
+export const ImageWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+export const Image = styled.img`
+  margin: 20px;
+  width: 30%;
 `;
 
 export const LikeWrapper = styled.div`

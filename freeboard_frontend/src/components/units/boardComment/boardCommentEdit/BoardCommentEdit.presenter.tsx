@@ -1,3 +1,4 @@
+import { Modal } from "antd";
 import { getDate } from "../../../../commons/utils/utils";
 import * as S from "./BoardCommentEdit.styes";
 import { IBoardCommentEditUIProps } from "./BoardCommentEdit.types";
@@ -5,6 +6,15 @@ import { IBoardCommentEditUIProps } from "./BoardCommentEdit.types";
 export default function BoardCommentEditUI(props: IBoardCommentEditUIProps) {
   return (
     <div>
+      {props.isOpenDeleteModal && (
+        <Modal open={true} onOk={props.onClickDelete}>
+          <div>비밀번호 입력 : </div>
+          <S.PasswordInput
+            type="password"
+            onChange={props.onChangeDeletePassword}
+          />
+        </Modal>
+      )}
       {!props.isEdit && (
         <S.CommentWrapper>
           <S.MainWrapper>
@@ -25,7 +35,7 @@ export default function BoardCommentEditUI(props: IBoardCommentEditUIProps) {
             />
             <S.DeleteIcon
               src="/images/boardComment/list/option_delete_icon.png"
-              onClick={props.onClickDelete}
+              onClick={props.onClickOpenDeleteModal}
               id={props.el._id}
             />
           </S.OptionWrapper>

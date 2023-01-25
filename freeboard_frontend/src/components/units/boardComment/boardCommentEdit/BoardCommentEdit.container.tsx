@@ -3,7 +3,7 @@ import { IBoardCommnetEditProps } from "./BoardCommentEdit.types";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   IMutation,
   IMutationDeleteBoardCommentArgs,
@@ -21,6 +21,8 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
   const [password, setPassword] = useState("");
   const [rating, setRating] = useState(props.el.rating);
   const [contents, setContents] = useState(props.el.contents);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+  const [myPassword, setMyPassword] = useState("");
 
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
@@ -69,14 +71,12 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
     }
   };
 
-  const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
-    const myPassword = prompt("비밀번호를 입력하세요");
-
+  const onClickDelete = async () => {
     try {
       await deleteBoardComment({
         variables: {
           password: myPassword,
-          boardCommentId: event.currentTarget.id,
+          boardCommentId: props.el._id,
         },
         refetchQueries: [
           {
@@ -91,6 +91,14 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
     }
   };
 
+  const onClickOpenDeleteModal = () => {
+    setIsOpenDeleteModal(true);
+  };
+
+  const onChangeDeletePassword = (event: ChangeEvent<HTMLInputElement>) => {
+    setMyPassword(event.target.value);
+  };
+
   return (
     <BoardCommentEditUI
       el={props.el}
@@ -98,6 +106,9 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
       setRating={setRating}
       contents={contents}
       onClickDelete={onClickDelete}
+      isOpenDeleteModal={isOpenDeleteModal}
+      onChangeDeletePassword={onChangeDeletePassword}
+      onClickOpenDeleteModal={onClickOpenDeleteModal}
       onClickUpdateIcon={onClickUpdateIcon}
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}

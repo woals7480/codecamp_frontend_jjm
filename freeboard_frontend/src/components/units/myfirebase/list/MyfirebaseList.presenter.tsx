@@ -1,6 +1,6 @@
 import * as S from "./MyfirebaseList.styles";
 import { IMyfirebaseListUIProps } from "./MyfirebaseList.types";
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 export default function MyfirebaseListUI(props: IMyfirebaseListUIProps) {
   return (
@@ -12,7 +12,7 @@ export default function MyfirebaseListUI(props: IMyfirebaseListUIProps) {
         <S.ColumnBasic>작성자</S.ColumnBasic>
       </S.Row>
       {props.dataBoards?.map((el, index) => (
-        <S.Row key={uuid()}>
+        <S.Row key={uuidv4()}>
           <S.ColumnBasic>{index + 1}</S.ColumnBasic>
           <S.ColumnBasic>{el.title}</S.ColumnBasic>
           <S.ColumnContents>{el.contents}</S.ColumnContents>

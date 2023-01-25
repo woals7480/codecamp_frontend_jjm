@@ -105,15 +105,9 @@ export const ImageWrapper = styled.div`
   padding-top: 40px;
 `;
 
-export const UploadButton = styled.button`
-  width: 78px;
-  height: 78px;
-  font-size: 14px;
-  margin-right: 24px;
-  background-color: #bdbdbd;
-  border: none;
-  outline: none;
-  cursor: pointer;
+export const Images = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const OptionWrapper = styled.div`

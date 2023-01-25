@@ -112,3 +112,8 @@ export const Button = styled.button`
   cursor: pointer;
   border: 1px solid gold;
 `;
+
+export const PasswordInput = styled.input`
+  width: 100%;
+  margin-top: 10px;
+`;

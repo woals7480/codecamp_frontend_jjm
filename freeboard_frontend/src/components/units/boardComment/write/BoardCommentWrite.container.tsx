@@ -55,6 +55,11 @@ export default function BoardCommentWrite() {
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
+
+    setWriter("");
+    setPassword("");
+    setContents("");
+    setRating(0);
   };
 
   return (
@@ -63,8 +68,11 @@ export default function BoardCommentWrite() {
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       onClickWrite={onClickWrite}
-      contents={contents}
       setRating={setRating}
+      contents={contents}
+      writer={writer}
+      password={password}
+      rating={rating}
     />
   );
 }

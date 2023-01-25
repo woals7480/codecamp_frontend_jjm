@@ -16,6 +16,7 @@ export interface IUpdateInputProps {
     address?: string;
     addressDetail?: string;
   };
+  images?: string[];
 }
 
 export interface IBoardWriteUIProps {
@@ -29,6 +30,7 @@ export interface IBoardWriteUIProps {
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeFileUrls: (fileUrl: string, index: number) => void;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
   isActive: boolean;
@@ -38,6 +40,7 @@ export interface IBoardWriteUIProps {
   onToggleModal: () => void;
   zipcode: string;
   address: string;
+  fileUrls: string[];
   data?: Pick<IQuery, "fetchBoard">;
 }
 
