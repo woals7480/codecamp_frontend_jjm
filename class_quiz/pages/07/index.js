@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 const FETCH_PRODUCTS = gql`
   query fetchProducts {
@@ -34,23 +35,50 @@ const Column = styled.div`
 export default function DeleteProducts() {
   const { data } = useQuery(FETCH_PRODUCTS);
   const [deleteProduct] = useMutation(DELETE_PRODUDCT);
+  const [checkList, setCheckList] = useState([]);
+  const dataList = data?.fetchProducts;
 
-  console.log(data?.fetchProducts);
-
-  const onClickDelete = (event) => {
-    deleteProduct({
-      variables: {
-        productId: event.target.id,
-      },
-      refetchQueries: [{ query: FETCH_PRODUCTS }],
-    });
+  const onClicnCheckAll = () => {
+    if (checkList.length !== dataList.length) {
+      setCheckList(dataList);
+    } else {
+      setCheckList([]);
+    }
   };
 
+  const isChecked = (el) => {
+    return checkList.some((cur) => cur._id === el._id);
+  };
+
+  const onCheckedItem = (el) => {
+    if (checkList.every((cur) => cur._id !== el._id)) {
+      setCheckList([...checkList, el]);
+    } else {
+      const result = checkList.filter((cur) => cur._id !== el._id);
+      setCheckList(result);
+    }
+  };
+
+  const onClickDelete = () => {
+    checkList.map(async (el) => {
+      await deleteProduct({
+        variables: {
+          productId: el._id,
+        },
+        refetchQueries: [{ query: FETCH_PRODUCTS }],
+      });
+    });
+    setCheckList([]);
+  };
   return (
     <div>
       <Row>
         <Column>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={onClicnCheckAll}
+            checked={checkList.length === dataList?.length}
+          />
         </Column>
         <Column>판매자</Column>
         <Column>상품명</Column>
@@ -60,7 +88,13 @@ export default function DeleteProducts() {
       {data?.fetchProducts.map((el) => (
         <Row key={el._id}>
           <Column>
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={isChecked(el)}
+              onChange={() => {
+                onCheckedItem(el);
+              }}
+            />
           </Column>
           <Column>{el.seller}</Column>
           <Column>{el.name}</Column>
@@ -68,6 +102,9 @@ export default function DeleteProducts() {
           <Column>{el.price}</Column>
         </Row>
       ))}
+      <div>
+        <button onClick={onClickDelete}>선택삭제하기</button>
+      </div>
     </div>
   );
 }
