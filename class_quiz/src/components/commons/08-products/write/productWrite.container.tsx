@@ -56,7 +56,9 @@ export default function ProductWrite(props: IProductWriteProps) {
         },
       });
       alert(result.data?.createProduct?.message);
-      router.push(`/08/products/${result.data?.createProduct?._id}`);
+      void router.push(
+        `/08/products/${String(result.data?.createProduct?._id)}`
+      );
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -76,7 +78,7 @@ export default function ProductWrite(props: IProductWriteProps) {
         },
       });
       alert(result.data?.updateProduct?.message);
-      router.push(`/08/products/${router.query.products}`);
+      void router.push(`/08/products/${String(router.query.products)}`);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }

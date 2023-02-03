@@ -4,6 +4,7 @@ import {
   IQuery,
   IQueryFetchProductArgs,
 } from "../../../../../src/commons/types/generated/types";
+
 import ProductWrite from "../../../../../src/components/commons/08-products/write/productWrite.container";
 
 const FETCH_PRODUCT = gql`

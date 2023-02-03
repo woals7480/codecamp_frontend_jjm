@@ -18,7 +18,7 @@ export default function ProductDetail() {
   });
 
   const onClickMoveToEditPage = () => {
-    router.push(`/08/products/${router.query.products}/edit`);
+    void router.push(`/08/products/${String(router.query.products)}/edit`);
   };
 
   return (
