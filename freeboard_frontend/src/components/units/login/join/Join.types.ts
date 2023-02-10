@@ -1,10 +1,20 @@
-import { ChangeEvent } from "react";
+import {
+  FormState,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
+
+export interface IJoinFormData {
+  email: string;
+  name: string;
+  password: string;
+  confirm: string;
+}
 
 export interface IJoinUIProps {
-  onChangeEmail: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeConfirm: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickJoinButton: () => void;
+  onClickJoinButton: (data: IJoinFormData) => void;
   confirmError: string;
+  register: UseFormRegister<IJoinFormData>;
+  handleSubmit: UseFormHandleSubmit<IJoinFormData>;
+  formState: FormState<IJoinFormData>;
 }
