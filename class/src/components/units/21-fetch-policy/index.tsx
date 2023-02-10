@@ -12,7 +12,7 @@ const FETCH_BOARDS = gql`
 `;
 
 export default function FetchPolicyExample() {
-  const { data } = useQuery(FETCH_BOARDS, { fetchPolicy: "cache-first" }); // cache-first기본값
+  const { data } = useQuery(FETCH_BOARDS); // cache-first기본값  { fetchPolicy: "cache-first" }
 
   return <></>;
 }

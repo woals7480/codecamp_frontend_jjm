@@ -29,3 +29,19 @@ export const Button = styled.span`
   color: #5729ff;
   cursor: pointer;
 `;
+
+export const LoggedInWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const LoggedInImg = styled.img`
+  width: 36px;
+  height: 36px;
+`;
+
+export const LoggedInName = styled.span`
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 18px;
+`;

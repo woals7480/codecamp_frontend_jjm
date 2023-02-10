@@ -7,10 +7,17 @@ export default function LayoutHeaderUI(props: ILayoutHeaderProps) {
       <S.LogoWrapper>
         <S.Logo onClick={props.onClickLogo}>💎 LIVE</S.Logo>
       </S.LogoWrapper>
-      <S.ButtonWrapper>
-        <S.Button onClick={props.onClickMoveToLogin}>로그인</S.Button>
-        <S.Button>회원가입</S.Button>
-      </S.ButtonWrapper>
+      {props.isLogged ? (
+        <S.LoggedInWrapper>
+          <S.LoggedInImg src="/images/avatar.png" />
+          <S.LoggedInName>정재민</S.LoggedInName>
+        </S.LoggedInWrapper>
+      ) : (
+        <S.ButtonWrapper>
+          <S.Button onClick={props.onClickMoveToLogin}>로그인</S.Button>
+          <S.Button onClick={props.onClickMoveToJoin}>회원가입</S.Button>
+        </S.ButtonWrapper>
+      )}
     </S.Wrapper>
   );
 }

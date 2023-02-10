@@ -31,9 +31,11 @@ export default function LoginPage() {
   const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
+
   const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
+
   const onClickLogin = async () => {
     try {
       // 1. 로그인해서 accessToken 받아오기

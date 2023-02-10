@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IQuery } from "../../src/commons/types/generated/types";
 
