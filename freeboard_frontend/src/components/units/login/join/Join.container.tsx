@@ -59,7 +59,7 @@ export default function Join() {
     if (password !== confirm) {
       setConfirmError("비밀번호가 일치하지 않습니다.");
     } else {
-      setConfirmError("비밀번호가 일치합니다.");
+      setConfirmError("");
       try {
         await createUser({
           variables: {

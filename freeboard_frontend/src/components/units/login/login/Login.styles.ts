@@ -18,14 +18,6 @@ export const LoginInpuWrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-export const LoginInput = styled.input`
-  width: 100%;
-  height: 56px;
-  font-size: 18px;
-  padding: 18px 12px;
-  border: solid 1px lightgray;
-`;
-
 export const LoginInputError = styled.div`
   font-size: 12px;
   color: orange;

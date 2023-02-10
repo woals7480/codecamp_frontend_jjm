@@ -26,7 +26,7 @@ export const JoinInput = styled.input`
   border: solid 1px lightgray;
 `;
 
-export const JoinInpuError = styled.span`
+export const JoinInputError = styled.span`
   font-size: 12px;
   color: orange;
 `;

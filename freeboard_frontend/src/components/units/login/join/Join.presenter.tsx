@@ -1,3 +1,4 @@
+import JoinInputs from "../../../commons/inputs/joinInputs";
 import * as S from "./Join.styles";
 import { IJoinUIProps } from "./Join.types";
 
@@ -8,47 +9,47 @@ export default function JoinUI(props: IJoinUIProps) {
         <S.JoinWrapper>
           <S.JoinForm onSubmit={props.handleSubmit(props.onClickJoinButton)}>
             <S.JoinInputWrapper>
-              <S.JoinInput
+              <JoinInputs
                 type="text"
                 placeholder="Email"
-                {...props.register("email")}
+                register={props.register("email")}
               />
-              <S.JoinInpuError>
+              <S.JoinInputError>
                 {props.formState.errors.email?.message}
-              </S.JoinInpuError>
+              </S.JoinInputError>
             </S.JoinInputWrapper>
 
             <S.JoinInputWrapper>
-              <S.JoinInput
+              <JoinInputs
                 type="text"
                 placeholder="Name"
-                {...props.register("name")}
+                register={props.register("name")}
               />
-              <S.JoinInpuError>
+              <S.JoinInputError>
                 {props.formState.errors.name?.message}
-              </S.JoinInpuError>
+              </S.JoinInputError>
             </S.JoinInputWrapper>
 
             <S.JoinInputWrapper>
-              <S.JoinInput
+              <JoinInputs
                 type="password"
                 placeholder="Password"
-                {...props.register("password")}
+                register={props.register("password")}
               />
-              <S.JoinInpuError>
+              <S.JoinInputError>
                 {props.formState.errors.password?.message}
-              </S.JoinInpuError>
+              </S.JoinInputError>
             </S.JoinInputWrapper>
 
             <S.JoinInputWrapper>
-              <S.JoinInput
+              <JoinInputs
                 type="password"
                 placeholder="Confirm Password"
-                {...props.register("confirm")}
+                register={props.register("confirm")}
               />
-              <S.JoinInpuError>
+              <S.JoinInputError>
                 {props.formState.errors.confirm?.message}
-              </S.JoinInpuError>
+              </S.JoinInputError>
             </S.JoinInputWrapper>
 
             <S.ConfirmError>{props.confirmError}</S.ConfirmError>

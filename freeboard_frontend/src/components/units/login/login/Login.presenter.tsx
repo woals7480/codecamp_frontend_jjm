@@ -1,3 +1,4 @@
+import LoginInputs from "../../../commons/inputs/loginInputs";
 import * as S from "./Login.styles";
 import { ILoginUIProps } from "./Login.types";
 
@@ -8,20 +9,20 @@ export default function LoginUI(props: ILoginUIProps) {
         <S.LoginWrapper>
           <S.LoginForm onSubmit={props.handleSubmit(props.onClickLoginButton)}>
             <S.LoginInpuWrapper>
-              <S.LoginInput
+              <LoginInputs
                 type="text"
                 placeholder="Email"
-                {...props.register("email")}
+                register={props.register("email")}
               />
               <S.LoginInputError>
                 {props.formState.errors.email?.message}
               </S.LoginInputError>
             </S.LoginInpuWrapper>
             <S.LoginInpuWrapper>
-              <S.LoginInput
+              <LoginInputs
                 type="password"
                 placeholder="Password"
-                {...props.register("password")}
+                register={props.register("password")}
               />
               <S.LoginInputError>
                 {props.formState.errors.password?.message}
