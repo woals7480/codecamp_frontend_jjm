@@ -6,19 +6,21 @@ export default function LoginUI(props: ILoginUIProps) {
     <>
       <S.Wrapper>
         <S.LoginWrapper>
-          <S.LoginInput
-            type="text"
-            placeholder="Email"
-            onChange={props.onChangeEmail}
-          />
-          <S.LoginInput
-            type="password"
-            placeholder="Password"
-            onChange={props.onChangePassword}
-          />
-          <S.LoginButton onClick={props.onClickLoginButton}>
-            로그인
-          </S.LoginButton>
+          <S.LoginForm>
+            <S.LoginInput
+              type="text"
+              placeholder="Email"
+              onChange={props.onChangeEmail}
+            />
+            <S.LoginInput
+              type="password"
+              placeholder="Password"
+              onChange={props.onChangePassword}
+            />
+            <S.LoginButton onClick={props.onClickLoginButton}>
+              로그인
+            </S.LoginButton>
+          </S.LoginForm>
           <S.JoinButton onClick={props.onClickJoinButton}>
             회원가입
           </S.JoinButton>

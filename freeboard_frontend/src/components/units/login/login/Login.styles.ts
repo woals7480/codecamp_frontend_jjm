@@ -12,6 +12,8 @@ export const LoginWrapper = styled.div`
   width: 460px;
 `;
 
+export const LoginForm = styled.form``;
+
 export const LoginInput = styled.input`
   width: 100%;
   height: 56px;

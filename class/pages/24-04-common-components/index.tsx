@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Input01 from "../../src/components/commons/inputs/01";
+import Button01 from "../../src/components/commons/buttons/01";
 
 interface IFormData {
   writer: string;
@@ -43,19 +45,15 @@ export default function ReactHookFromPage() {
   return (
     <>
       <form onSubmit={handleSubmit(onClickSubmit)}>
-        작성자 : <input type="text" {...register("writer")} />
+        작성자 : <Input01 type="text" register={register("writer")} />
         <div>{formState.errors.writer?.message}</div>
-        제목 : <input type="text" {...register("title")} />
+        제목 : <Input01 type="text" register={register("title")} />
         <div>{formState.errors.title?.message}</div>
-        내용 : <input type="text" {...register("contents")} />
+        내용 : <Input01 type="text" register={register("contents")} />
         <div>{formState.errors.contents?.message}</div>
-        비밀번호 : <input type="text" {...register("password")} />
+        비밀번호 : <Input01 type="password" register={register("password")} />
         <div>{formState.errors.password?.message}</div>
-        <button
-          style={{ backgroundColor: formState.isValid ? "yellow" : "blue" }}
-        >
-          등록하기
-        </button>
+        <Button01 title="등록하기" isActive={formState.isValid} />
       </form>
     </>
   );
