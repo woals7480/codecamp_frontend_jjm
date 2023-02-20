@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
-import { accessTokenState, isLoggedInState } from "../../../commons/store";
+import { accessTokenState } from "../../../commons/store";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
 
@@ -17,14 +17,12 @@ const GLOBAL_STATE = new InMemoryCache();
 
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
   useEffect(() => {
     const result = localStorage.getItem("accessToken");
 
     if (result) {
       setAccessToken(result);
-      setIsLoggedIn(true);
     }
   }, []);
 

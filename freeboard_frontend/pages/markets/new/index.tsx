@@ -1,8 +1,8 @@
-import { WithAuth } from "../../../src/components/commons/hocs/withAuth";
+import { useAuth } from "../../../src/components/commons/hooks/useAuth";
 import MarketWrite from "../../../src/components/units/market/write/marketWrite.container";
 
-function MarketWWritePage() {
+export default function MarketWWritePage() {
+  useAuth();
+
   return <MarketWrite />;
 }
-
-export default WithAuth(MarketWWritePage);

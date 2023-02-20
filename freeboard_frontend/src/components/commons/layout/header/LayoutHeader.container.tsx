@@ -1,30 +1,20 @@
-import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
-import { isLoggedInState } from "../../../../commons/store";
+import { gql, useQuery } from "@apollo/client";
+import { IQuery } from "../../../../commons/types/generated/types";
 import LayoutHeaderUI from "./LayoutHeader.presenter";
 
+const FETCH_USER_LOGGED_IN = gql`
+  query fetchUserLoggedIn {
+    fetchUserLoggedIn {
+      _id
+      email
+      name
+    }
+  }
+`;
+
 export default function LayoutHeader() {
-  const router = useRouter();
-  const [isLogged, setIsLogged] = useRecoilState(isLoggedInState);
-  console.log(isLogged);
-  const onClickLogo = () => {
-    void router.push("/boards");
-  };
+  const { data } =
+    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
-  const onClickMoveToLogin = () => {
-    void router.push("/login");
-  };
-
-  const onClickMoveToJoin = () => {
-    void router.push("/join");
-  };
-
-  return (
-    <LayoutHeaderUI
-      onClickLogo={onClickLogo}
-      onClickMoveToLogin={onClickMoveToLogin}
-      onClickMoveToJoin={onClickMoveToJoin}
-      isLogged={isLogged}
-    />
-  );
+  return <LayoutHeaderUI data={data} />;
 }

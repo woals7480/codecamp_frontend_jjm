@@ -1,6 +1,8 @@
-import { WithAuth } from "../../src/components/commons/hocs/withAuth";
+import { useAuth } from "../../src/components/commons/hooks/useAuth";
+import LayoutMypage from "../../src/components/commons/layout/mypage/LayoutMypage.container";
 
-function MyPages() {
-  return <>마이페이지</>;
+export default function MyPages() {
+  useAuth();
+
+  return <LayoutMypage />;
 }
-export default WithAuth(MyPages);
