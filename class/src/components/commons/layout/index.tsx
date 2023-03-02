@@ -15,8 +15,6 @@ export default function Layout(props: ILayoutProps) {
 
   const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath);
 
-  console.log(isHiddenHeader);
-
   return (
     <>
       {!isHiddenHeader && <LayoutHeader />}
