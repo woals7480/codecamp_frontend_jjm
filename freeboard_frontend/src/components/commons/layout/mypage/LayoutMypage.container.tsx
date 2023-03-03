@@ -7,7 +7,5 @@ export default function LayoutMypage() {
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
-  console.log(data);
-
   return <LayoutMypageUI data={data} />;
 }
