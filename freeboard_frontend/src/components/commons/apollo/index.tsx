@@ -22,6 +22,8 @@ export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   useEffect(() => {
+    if (!accessToken) return;
+
     void getAccessToken().then((newAccessToken) => {
       if (newAccessToken === undefined) return;
       setAccessToken(newAccessToken);

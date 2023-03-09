@@ -1,3 +1,4 @@
+import { Address } from "react-daum-postcode";
 import {
   UseFormRegister,
   UseFormHandleSubmit,
@@ -9,6 +10,9 @@ export interface IFormData {
   remarks: string;
   contents: string;
   price: number;
+  zipcode: string;
+  address: string;
+  addressDetail: string;
 }
 
 export interface IMarketWriteUIProps {
@@ -16,4 +20,8 @@ export interface IMarketWriteUIProps {
   register: UseFormRegister<IFormData>;
   handleSubmit: UseFormHandleSubmit<IFormData>;
   formState: FormState<IFormData>;
+  onChangeContents: (value: string) => void;
+  onToggleModal: () => void;
+  isOpen: boolean;
+  onCompleteAddressSearch: (data: Address) => void;
 }

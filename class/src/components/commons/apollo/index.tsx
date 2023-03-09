@@ -50,6 +50,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
     // const result = localStorage.getItem("accessToken");
     // if (result) setAccessToken(result);
 
+    if (!accessToken) return;
     // 2. 새로운방식(refreshToken 이후)
     void getAccessToken().then((newAccessToken) => {
       setAccessToken(newAccessToken);
@@ -73,7 +74,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
               operation.setContext({
                 headers: {
                   ...operation.getContext().headers, // 만료된 토큰이 추가되어 있는 상태
-                  Authorization: `Bearer ${newAccessToken}`, // 토큰만 새걸로 바꿔치기
+                  authorization: `Bearer ${newAccessToken}`, // 토큰만 새걸로 바꿔치기
                 },
               });
             })
@@ -85,7 +86,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
 
   const uploadLink = createUploadLink({
     uri: "https://backendonline.codebootcamp.co.kr/graphql",
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers: { authorization: `Bearer ${accessToken}` },
     credentials: "include",
   });
 

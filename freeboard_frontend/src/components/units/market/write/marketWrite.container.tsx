@@ -11,6 +11,8 @@ import {
 } from "../../../../commons/types/generated/types";
 import { useRouter } from "next/router";
 import { Modal } from "antd";
+import { useState } from "react";
+import { Address } from "react-daum-postcode";
 
 const schema = yup.object({
   name: yup.string().required("상품명을 입력해주세요."),
@@ -26,41 +28,72 @@ const schema = yup.object({
 });
 
 export default function MarketWrite() {
-  const { register, handleSubmit, formState } = useForm<IFormData>({
-    resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+  const { register, handleSubmit, formState, trigger, setValue } =
+    useForm<IFormData>({
+      resolver: yupResolver(schema),
+      mode: "onChange",
+    });
   const [createUseditem] = useMutation<
     Pick<IMutation, "createUseditem">,
     IMutationCreateUseditemArgs
   >(CREATE_USEDITEM);
   const router = useRouter();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onChangeContents = (value: string) => {
+    setValue("contents", value === "<p><br></p>" ? "" : value);
+
+    void trigger("contents");
+  };
+
   const onClickSubmit = async (data: IFormData) => {
-    try {
-      await createUseditem({
-        variables: {
-          createUseditemInput: {
-            name: data.name,
-            remarks: data.remarks,
-            contents: data.contents,
-            price: Number(data.price),
-          },
-        },
-      });
-      Modal.success({ content: "상품등록에 성공하셨습니다." });
-      void router.push("/markets");
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message });
-    }
+    console.log(data);
+    // try {
+    //   await createUseditem({
+    //     variables: {
+    //       createUseditemInput: {
+    //         name: data.name,
+    //         remarks: data.remarks,
+    //         contents: data.contents,
+    //         price: Number(data.price),
+    //         useditemAddress: {
+    //           zipcode: data.zipcode,
+    //           address: data.address,
+    //           addressDetail: data.addressDetail,
+    //         },
+    //       },
+    //     },
+    //   });
+    //   Modal.success({ content: "상품등록에 성공하셨습니다." });
+    //   console.log(data);
+    //   void router.push("/markets");
+    // } catch (error) {
+    //   if (error instanceof Error) Modal.error({ content: error.message });
+    // }
+  };
+
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onCompleteAddressSearch = (data: Address) => {
+    console.log(data);
+    setValue("zipcode", data.zonecode);
+    setValue("address", data.address);
+    onToggleModal();
   };
 
   return (
     <MarketWriteUI
+      onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
       register={register}
       handleSubmit={handleSubmit}
       formState={formState}
+      onToggleModal={onToggleModal}
+      isOpen={isOpen}
+      onCompleteAddressSearch={onCompleteAddressSearch}
     />
   );
 }

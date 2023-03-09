@@ -54,7 +54,6 @@ export default function Login() {
         return;
       }
       setAccessToken(accessToken);
-      localStorage.setItem("accessToken", accessToken);
       void router.push("/boards");
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });

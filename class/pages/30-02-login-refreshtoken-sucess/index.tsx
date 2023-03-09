@@ -1,4 +1,5 @@
 import { gql, useApolloClient } from "@apollo/client";
+import { IQuery } from "../../src/commons/types/generated/types";
 
 const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
@@ -23,7 +24,7 @@ export default function LoginSuccessPage() {
   const client = useApolloClient();
 
   const onClickButton = async () => {
-    const result = await client.query({
+    const result = await client.query<Pick<IQuery, "fetchUserLoggedIn">>({
       query: FETCH_USER_LOGGED_IN,
     });
     console.log(result);
@@ -32,6 +33,7 @@ export default function LoginSuccessPage() {
   return (
     <>
       <button onClick={onClickButton}>클릭하세요</button>
+      {/* (result && <div>{result.data.fetchUserLoggedIn.name}</div>) */}
     </>
   );
 }

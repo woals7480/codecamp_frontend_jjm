@@ -4,12 +4,22 @@ import { useForm } from "react-hook-form";
 import {
   IMutation,
   IMutationCreateBoardArgs,
-} from "../../../src/commons/types/generated/types";
+  IMutationUploadFileArgs,
+} from "../../../../src/commons/types/generated/types";
 
 const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
     createBoard(createBoardInput: $createBoardInput) {
       _id
+    }
+  }
+`;
+
+const UPLOAD_FILE = gql`
+  mutation uploadFile($file: Upload!) {
+    uploadFile(file: $file) {
+      _id
+      url
     }
   }
 `;
@@ -21,24 +31,52 @@ interface IFormData {
   contents: string;
 }
 
-export default function ImageUploadPage() {
+export default function ImageUploadPreloadPage() {
   const { register, handleSubmit } = useForm<IFormData>({
     mode: "onChange",
   });
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOAD_FILE);
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
     IMutationCreateBoardArgs
   >(CREATE_BOARD);
-  const [iamgeUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [files, setFiles] = useState<File[]>([]);
 
-  const onChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const result = URL.createObjectURL(file);
-    setImageUrl(result);
-  };
+  const onChangeFile =
+    (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const result = URL.createObjectURL(file);
+      const tempUrls = [...imageUrls];
+      tempUrls[index] = result;
+      setImageUrls(tempUrls);
+
+      const tempFiles = [...files];
+      tempFiles[index] = file;
+      setFiles(tempFiles);
+      console.log(tempFiles);
+      console.log(tempUrls);
+    };
 
   const onSubmit = async (data: IFormData) => {
+    // const results = await Promise.all([
+    //   uploadFile({ variables: { file: files[0] } }),
+    //   uploadFile({ variables: { file: files[1] } }),
+    //   uploadFile({ variables: { file: files[2] } }),
+    // ]);
+
+    const results = await Promise.all(
+      files.map((el) => el && uploadFile({ variables: { file: el } }))
+    );
+    console.log(results);
+    const resultUrls = results.map((el) =>
+      el.data ? el.data?.uploadFile.url : ""
+    );
+
     await createBoard({
       variables: {
         createBoardInput: {
@@ -46,6 +84,7 @@ export default function ImageUploadPage() {
           password: data.password,
           title: data.title,
           contents: data.contents,
+          images: resultUrls,
         },
       },
     });
@@ -61,14 +100,14 @@ export default function ImageUploadPage() {
       <br />
       내용 : <input type="text" {...register("contents")} />
       <br />
-      사진 : <input type="file" onChange={onChangeFile} />
-      <img src={iamgeUrl} />
+      사진 : <input type="file" onChange={onChangeFile(0)} />
+      <img src={imageUrls[0]} />
       <br />
-      사진 : <input type="file" onChange={onChangeFile} />
-      <img src={iamgeUrl} />
+      사진 : <input type="file" onChange={onChangeFile(1)} />
+      <img src={imageUrls[1]} />
       <br />
-      사진 : <input type="file" onChange={onChangeFile} />
-      <img src={iamgeUrl} />
+      사진 : <input type="file" onChange={onChangeFile(2)} />
+      <img src={imageUrls[2]} />
       <button>등록</button>
     </form>
   );
