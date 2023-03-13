@@ -10,17 +10,19 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
         <S.Title>상품 등록하기</S.Title>
         <S.WriterWrapper>
           <S.WriterForm onSubmit={props.handleSubmit(props.onClickSubmit)}>
-            {props.isOpen && (
-              <S.AddressModal
-                open={true}
-                onOk={props.onToggleModal}
-                onCancel={props.onToggleModal}
-              >
-                <S.AddressSearchInput
-                  onComplete={props.onCompleteAddressSearch}
-                />
-              </S.AddressModal>
-            )}
+            <>
+              {props.isOpen && (
+                <S.AddressModal
+                  open={true}
+                  onOk={props.onToggleModal}
+                  onCancel={props.onToggleModal}
+                >
+                  <S.AddressSearchInput
+                    onComplete={props.onCompleteAddressSearch}
+                  />
+                </S.AddressModal>
+              )}
+            </>
             <S.InputWrapper>
               <S.Label>상품명</S.Label>
               <S.Writer
