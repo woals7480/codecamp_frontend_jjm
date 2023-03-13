@@ -2,10 +2,9 @@ import * as S from "./marketList.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { IMarketListUIProps } from "./marketList.types";
 import { HeartFilled } from "@ant-design/icons";
-import { useMoveToPage } from "../../../commons/hooks/useMovetoPage";
+import Link from "next/link";
 
 export default function MarketListUI(props: IMarketListUIProps) {
-  const { onClickMoveToPage } = useMoveToPage();
   return (
     <S.Wrapper>
       <S.InfiniteScrollWrapper>
@@ -50,9 +49,13 @@ export default function MarketListUI(props: IMarketListUIProps) {
         </InfiniteScroll>
       </S.InfiniteScrollWrapper>
       <S.ButtonWrapper>
-        <S.Button onClick={onClickMoveToPage("/markets/new")}>
-          <S.PencilIcon src="/images/board/list/write.png" /> 상품 등록하기
-        </S.Button>
+        <Link href="/markets/new">
+          <a style={{ textDecoration: "none" }}>
+            <S.Button>
+              <S.PencilIcon src="/images/board/list/write.png" /> 상품 등록하기
+            </S.Button>
+          </a>
+        </Link>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

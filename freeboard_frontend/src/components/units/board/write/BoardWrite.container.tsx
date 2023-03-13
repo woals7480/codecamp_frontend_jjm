@@ -218,6 +218,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       zipcode={zipcode}
       address={address}
       fileUrls={fileUrls}
+      files={files}
       data={props.data}
     />
   );

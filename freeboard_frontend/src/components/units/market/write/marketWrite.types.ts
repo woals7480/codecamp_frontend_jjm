@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import { Address } from "react-daum-postcode";
 import {
   UseFormRegister,
@@ -24,4 +25,7 @@ export interface IMarketWriteUIProps {
   onToggleModal: () => void;
   isOpen: boolean;
   onCompleteAddressSearch: (data: Address) => void;
+  imageUrls: string[];
+  fileRef: RefObject<HTMLInputElement>;
+  onChangeFileUrls: (fileUrl: string, file: File, index: number) => void;
 }

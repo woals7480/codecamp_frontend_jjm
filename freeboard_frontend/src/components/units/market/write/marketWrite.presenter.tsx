@@ -1,5 +1,7 @@
 import * as S from "./marketWrite.styles";
 import { IMarketWriteUIProps } from "./marketWrite.types";
+import { v4 as uuidv4 } from "uuid";
+import Uploads02 from "../../../commons/uploads/02/Uploads02.container";
 
 export default function MarketWriteUI(props: IMarketWriteUIProps) {
   return (
@@ -61,19 +63,35 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
             </S.InputWrapper>
             <S.InputWrapper>
               <S.Label>거래위치</S.Label>
-              <S.ZipcodeWrapper>
-                <S.Zipcode>
-                  <S.ZipcodeInput readOnly {...props.register("zipcode")} />
-                  <S.SearchButton onClick={props.onToggleModal}>
-                    우편번호 검색
-                  </S.SearchButton>
-                </S.Zipcode>
-                <S.Address readOnly {...props.register("address")} />
-                <S.Address
-                  {...props.register("addressDetail")}
-                  placeholder="상세주소를 입력해주세요."
-                />
-              </S.ZipcodeWrapper>
+              <S.AddressWrapper>
+                <S.Map id="map"></S.Map>
+                <S.ZipcodeWrapper>
+                  <S.Zipcode>
+                    <S.ZipcodeInput readOnly {...props.register("zipcode")} />
+                    <S.SearchButton onClick={props.onToggleModal} type="button">
+                      우편번호 검색
+                    </S.SearchButton>
+                  </S.Zipcode>
+                  <S.Address readOnly {...props.register("address")} />
+                  <S.Address
+                    {...props.register("addressDetail")}
+                    placeholder="상세주소를 입력해주세요."
+                  />
+                </S.ZipcodeWrapper>
+              </S.AddressWrapper>
+            </S.InputWrapper>
+            <S.InputWrapper>
+              <S.Label>사진 첨부</S.Label>
+              <S.ImageWrapper>
+                {props.imageUrls.map((el, index) => (
+                  <Uploads02
+                    key={uuidv4()}
+                    index={index}
+                    imageUrl={el}
+                    onChangeFileUrls={props.onChangeFileUrls}
+                  />
+                ))}
+              </S.ImageWrapper>
             </S.InputWrapper>
             <S.ButtonWrapper>
               <S.SubmitButton>등록하기</S.SubmitButton>

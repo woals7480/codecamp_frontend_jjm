@@ -74,9 +74,15 @@ export const AddressSearchInput = styled(DaumPostcodeEmbed)``;
 
 export const AddressModal = styled(Modal)``;
 
+export const AddressWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const ZipcodeWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: end;
 `;
 
 export const Zipcode = styled.div`
@@ -105,4 +111,37 @@ export const Address = styled.input`
   margin-top: 16px;
   padding-left: 16px;
   border: 1px solid #bdbdbd;
+`;
+
+export const Map = styled.div`
+  width: 384px;
+  height: 252px;
+`;
+
+export const ImageWrapper = styled.div`
+  display: flex;
+`;
+
+export const UploadImage = styled.img`
+  width: 180px;
+  height: 180px;
+  margin-right: 24px;
+  cursor: pointer;
+`;
+
+export const UploadButton = styled.div`
+  width: 180px;
+  height: 180px;
+  font-size: 18px;
+  margin-right: 24px;
+  background-color: #bdbdbd;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const UploadFileHidden = styled.input`
+  display: none;
 `;
