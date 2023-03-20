@@ -16,34 +16,38 @@ export default function MarketListUI(props: IMarketListUIProps) {
         >
           <div>
             {props.data?.fetchUseditems.map((el) => (
-              <S.ProductWrapper key={el._id}>
-                <S.ImageWrapper>
-                  {el.images && (el.images.length === 0 || !el.images[0]) && (
-                    <S.NoImage>사진없음</S.NoImage>
-                  )}
-                  {el.images && el.images.length !== 0 && el.images[0] && (
-                    <S.ProductImage
-                      src={`https://storage.googleapis.com/${el.images[0]}`}
-                    />
-                  )}
-                </S.ImageWrapper>
-                <S.InfoWrapper>
-                  <S.InfoName>{el.name}</S.InfoName>
-                  <S.InfoRemarks>{el.remarks}</S.InfoRemarks>
-                  <S.InfoPicked>
-                    <S.PickedIcon>
-                      <HeartFilled />
-                    </S.PickedIcon>
-                    <S.PickedCount>{el.pickedCount}</S.PickedCount>
-                  </S.InfoPicked>
-                </S.InfoWrapper>
-                <S.PriceWrapper>
-                  <S.InfoPrice>
-                    {el.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    원
-                  </S.InfoPrice>
-                </S.PriceWrapper>
-              </S.ProductWrapper>
+              <Link href={`/markets/${el._id}`} key={el._id}>
+                <S.ProductWrapper>
+                  <S.ImageWrapper>
+                    {el.images && (el.images.length === 0 || !el.images[0]) && (
+                      <S.NoImage>사진없음</S.NoImage>
+                    )}
+                    {el.images && el.images.length !== 0 && el.images[0] && (
+                      <S.ProductImage
+                        src={`https://storage.googleapis.com/${el.images[0]}`}
+                      />
+                    )}
+                  </S.ImageWrapper>
+                  <S.InfoWrapper>
+                    <S.InfoName>{el.name}</S.InfoName>
+                    <S.InfoRemarks>{el.remarks}</S.InfoRemarks>
+                    <S.InfoPicked>
+                      <S.PickedIcon>
+                        <HeartFilled />
+                      </S.PickedIcon>
+                      <S.PickedCount>{el.pickedCount}</S.PickedCount>
+                    </S.InfoPicked>
+                  </S.InfoWrapper>
+                  <S.PriceWrapper>
+                    <S.InfoPrice>
+                      {el.price
+                        ?.toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      원
+                    </S.InfoPrice>
+                  </S.PriceWrapper>
+                </S.ProductWrapper>
+              </Link>
             ))}
           </div>
         </InfiniteScroll>

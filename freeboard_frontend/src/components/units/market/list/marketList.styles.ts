@@ -17,6 +17,7 @@ export const ProductWrapper = styled.div`
   height: 200px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const ImageWrapper = styled.div`
