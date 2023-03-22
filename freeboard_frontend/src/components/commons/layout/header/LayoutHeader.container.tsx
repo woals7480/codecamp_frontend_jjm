@@ -20,5 +20,5 @@ export default function LayoutHeader() {
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
-  return <LayoutHeaderUI data={data} />;
+  return <LayoutHeaderUI data={data} accessToken={accessToken} />;
 }

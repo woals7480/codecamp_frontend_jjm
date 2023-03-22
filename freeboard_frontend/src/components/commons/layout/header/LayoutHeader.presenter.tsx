@@ -1,3 +1,4 @@
+import LogoutButtonPage from "../../buttons/logoutButton";
 import { useMoveToPage } from "../../hooks/useMovetoPage";
 import * as S from "./LayoutHeader.styles";
 import { ILayoutHeaderUIProps } from "./LayoutHeader.types";
@@ -9,10 +10,11 @@ export default function LayoutHeaderUI(props: ILayoutHeaderUIProps) {
       <S.LogoWrapper>
         <S.Logo onClick={onClickMoveToPage("/boards")}>💎 LIVE</S.Logo>
       </S.LogoWrapper>
-      {props.data?.fetchUserLoggedIn ? (
+      {props.accessToken ? (
         <S.LoggedInWrapper>
           <S.LoggedInImg src="/images/avatar.png" />
           <S.LoggedInName>{props.data?.fetchUserLoggedIn.name}</S.LoggedInName>
+          <LogoutButtonPage />
         </S.LoggedInWrapper>
       ) : (
         <S.ButtonWrapper>

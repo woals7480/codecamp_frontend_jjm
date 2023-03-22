@@ -7,10 +7,11 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
-import { accessTokenState } from "../../../commons/store";
-import { useRecoilState } from "recoil";
+import { accessTokenState, userInfoState } from "../../../commons/store";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { getAccessToken } from "../../../commons/libraries/getAccessToken";
+import { getUserInfo } from "../../../commons/libraries/getUserInfo";
 
 interface IApolloSettingProps {
   children: JSX.Element;
@@ -20,13 +21,17 @@ const GLOBAL_STATE = new InMemoryCache();
 
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   useEffect(() => {
-    if (!accessToken) return;
-
     void getAccessToken().then((newAccessToken) => {
       if (newAccessToken === undefined) return;
       setAccessToken(newAccessToken);
+
+      void getUserInfo(newAccessToken).then((userInfo) => {
+        if (userInfo === undefined) return;
+        setUserInfo({ ...userInfo });
+      });
     });
   }, []);
 
@@ -48,6 +53,8 @@ export default function ApolloSetting(props: IApolloSettingProps) {
               });
             })
           ).flatMap(() => forward(operation));
+        } else if (err.extensions.code === "INTERNAL_SERVER_ERROR") {
+          return;
         }
       }
     }

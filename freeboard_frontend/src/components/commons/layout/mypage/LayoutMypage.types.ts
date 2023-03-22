@@ -1,5 +1,11 @@
-import { IQuery } from "../../../../commons/types/generated/types";
-
 export interface ILayoutMypageUIProps {
-  data?: Pick<IQuery, "fetchUserLoggedIn">;
+  userInfo: {
+    _id?: string;
+    name?: string;
+    email?: string;
+    userPoint?: {
+      _id: string;
+      amount: number;
+    };
+  };
 }

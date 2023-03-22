@@ -12,7 +12,9 @@ export default function LayoutMypageUI(props: ILayoutMypageUIProps) {
       <S.Title>MYPAGE</S.Title>
       <S.ProfileWrapper>
         <S.ProfileImage src="/images/avatar.png" />
-        <S.ProfileName>{props.data?.fetchUserLoggedIn.name}</S.ProfileName>
+        <S.ProfileName>{props.userInfo.name}</S.ProfileName>
+        <DollarCircleOutlined />
+        <div>{props.userInfo.userPoint?.amount}</div>
       </S.ProfileWrapper>
       <S.OptionWrapper>
         <S.Option>

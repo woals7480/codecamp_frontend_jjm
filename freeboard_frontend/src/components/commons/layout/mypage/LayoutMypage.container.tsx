@@ -1,11 +1,9 @@
-import { useQuery } from "@apollo/client";
-import { IQuery } from "../../../../commons/types/generated/types";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../../../commons/store";
 import LayoutMypageUI from "./LayoutMypage.presenter";
-import { FETCH_USER_LOGGED_IN } from "./LayoutMypage.queries";
 
 export default function LayoutMypage() {
-  const { data } =
-    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
-
-  return <LayoutMypageUI data={data} />;
+  const userInfo = useRecoilValue(userInfoState);
+  console.log(userInfo);
+  return <LayoutMypageUI userInfo={userInfo} />;
 }
