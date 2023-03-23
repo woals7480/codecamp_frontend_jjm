@@ -28,7 +28,7 @@ export const getUserInfo = async (newAccessToken: string) => {
     const result = await graphQLClient.request<
       Pick<IQuery, "fetchUserLoggedIn">
     >(FETCH_USER_LOGGED_IN);
-    const userInfo = result.fetchUserLoggedIn;
+    const userInfo = JSON.stringify(result.fetchUserLoggedIn);
     return userInfo;
   } catch (error) {
     if (error instanceof Error) Modal.error({ content: error.message });

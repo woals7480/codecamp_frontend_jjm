@@ -30,7 +30,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
 
       void getUserInfo(newAccessToken).then((userInfo) => {
         if (userInfo === undefined) return;
-        setUserInfo({ ...userInfo });
+        setUserInfo(JSON.parse(userInfo));
       });
     });
   }, []);

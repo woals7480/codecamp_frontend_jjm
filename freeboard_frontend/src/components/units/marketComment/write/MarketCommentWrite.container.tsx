@@ -1,5 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Modal } from "antd";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -23,25 +25,30 @@ const schema = yup
 export default function MarketCommentWrite() {
   const clinet = useApolloClient();
   const [contentsLength, setContentsLength] = useState(0);
+  const router = useRouter();
 
-  const { register, handleSubmit, formState } = useForm<IFormData>({
+  const { register, handleSubmit, formState, setValue } = useForm<IFormData>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
 
-  const onClickSubmit = (data: IFormData) => {
-    const result = clinet.mutate<
-      Pick<IMutation, "createUseditemQuestion">,
-      IMutationCreateUseditemQuestionArgs
-    >({
-      mutation: CREATE_USEDITEM_QUESTION,
-      variables: {
-        createUseditemQuestionInput: { contents: data.contents },
-        useditemId: "asdfsd",
-      },
-    });
-
-    console.log(result);
+  const onClickSubmit = async (data: IFormData) => {
+    try {
+      await clinet.mutate<
+        Pick<IMutation, "createUseditemQuestion">,
+        IMutationCreateUseditemQuestionArgs
+      >({
+        mutation: CREATE_USEDITEM_QUESTION,
+        variables: {
+          createUseditemQuestionInput: { contents: data.contents },
+          useditemId: String(router.query.marketId),
+        },
+      });
+      Modal.success({ content: "댓글이 등록되었습니다." });
+      setValue("contents", "");
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
+    }
   };
 
   const onChangeLength = (event: ChangeEvent<HTMLTextAreaElement>) => {
