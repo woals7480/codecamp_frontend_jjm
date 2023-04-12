@@ -1,8 +1,10 @@
-import { useAuth } from "../../src/components/commons/hooks/useAuth";
 import LayoutMypage from "../../src/components/commons/layout/mypage/LayoutMypage.container";
+import Mypage from "../../src/components/units/mypage/mypage.container";
 
 export default function MyPages() {
-  useAuth();
-
-  return <LayoutMypage />;
+  return (
+    <LayoutMypage>
+      <Mypage />
+    </LayoutMypage>
+  );
 }

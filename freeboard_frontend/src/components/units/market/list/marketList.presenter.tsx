@@ -1,8 +1,8 @@
-import * as S from "./marketList.styles";
 import InfiniteScroll from "react-infinite-scroller";
-import { IMarketListUIProps } from "./marketList.types";
 import { HeartFilled } from "@ant-design/icons";
 import Link from "next/link";
+import { IMarketListUIProps } from "./MarketList.types";
+import * as S from "./MarketList.styles";
 
 export default function MarketListUI(props: IMarketListUIProps) {
   return (

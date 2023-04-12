@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 80px;
-  padding-right: 80px;
-  background-color: wheat;
+  padding-right: 40px;
+  border-right: 1px solid gray;
+  height: 80vh;
 `;
 
 export const Title = styled.div`
@@ -25,9 +27,20 @@ export const ProfileImage = styled.img`
 
 export const ProfileName = styled.div`
   margin-top: 30px;
+  margin-bottom: 10px;
   font-size: 24px;
   font-weight: bold;
 `;
+
+export const ProfilePoint = styled.div`
+  display: flex;
+`;
+
+export const PointIcon = styled.div`
+  padding-right: 5px;
+`;
+
+export const Point = styled.div``;
 
 export const OptionWrapper = styled.div`
   margin-top: 100px;
@@ -36,6 +49,7 @@ export const OptionWrapper = styled.div`
 export const Option = styled.div`
   display: flex;
   align-item: center;
+  margin-bottom: 30px;
 `;
 
 export const OptionIcon = styled.div`
@@ -45,4 +59,5 @@ export const OptionIcon = styled.div`
 
 export const OptionTitle = styled.div`
   font-size: 20px;
+  cursor: pointer;
 `;

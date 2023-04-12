@@ -53,21 +53,19 @@ export default function ApolloSetting(props: IApolloSettingProps) {
               });
             })
           ).flatMap(() => forward(operation));
-        } else if (err.extensions.code === "INTERNAL_SERVER_ERROR") {
-          return;
         }
       }
     }
   });
 
   const uploadLink = createUploadLink({
-    uri: "https://backendonline.codebootcamp.co.kr/graphql",
+    uri: "https://backend-practice.codebootcamp.co.kr/graphql",
     credentials: "include",
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
   const client = new ApolloClient({
-    link: ApolloLink.from([errorLink, uploadLink]),
+    link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     cache: GLOBAL_STATE,
   });
 

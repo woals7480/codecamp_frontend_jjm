@@ -1,11 +1,17 @@
 import styled from "@emotion/styled";
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #bdbdbd;
+  margin-top: 30px;
+`;
+
 export const CommentWrapper = styled.div`
   width: 1200px;
   height: 128px;
   margin: 0 100px;
   margin-bottom: 25px;
-  border-bottom: 1px solid #bdbdbd;
   display: flex;
   justify-content: space-between;
 `;

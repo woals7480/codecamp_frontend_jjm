@@ -1,6 +1,12 @@
-import { IQuery } from "../../../../commons/types/generated/types";
-
 export interface IMarketCommentListUIProps {
-  data?: Pick<IQuery, "fetchUseditemQuestions">;
-  onLoadMore: () => void;
+  data: {
+    _id: string;
+    contents: string;
+    user: {
+      _id: string;
+      email: string;
+      name: string;
+    };
+    createdAt: string;
+  };
 }

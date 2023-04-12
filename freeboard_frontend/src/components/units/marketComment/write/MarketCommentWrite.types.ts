@@ -16,4 +16,5 @@ export interface IMarketCommentWriteUIProps {
   formState: FormState<IFormData>;
   onChangeLength: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   contentsLength: number;
+  isQnA: boolean;
 }

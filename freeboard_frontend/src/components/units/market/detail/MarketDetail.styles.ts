@@ -1,4 +1,4 @@
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -128,7 +128,12 @@ export const ProductPickedWrapper = styled.div`
   padding-right: 10px;
 `;
 
-export const PickedIcon = styled(HeartOutlined)`
+export const NonPickedIcon = styled(HeartOutlined)`
+  font-size: 30px;
+  color: gold;
+`;
+
+export const PickedIcon = styled(HeartFilled)`
   font-size: 30px;
   color: gold;
 `;

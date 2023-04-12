@@ -1,9 +1,24 @@
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../../commons/store";
 import LayoutMypageUI from "./LayoutMypage.presenter";
+import styled from "@emotion/styled";
 
-export default function LayoutMypage() {
+interface ILayoutMypageProps {
+  children: JSX.Element;
+}
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 1200px;
+`;
+
+export default function LayoutMypage(props: ILayoutMypageProps) {
   const userInfo = useRecoilValue(userInfoState);
-  console.log(userInfo);
-  return <LayoutMypageUI userInfo={userInfo} />;
+
+  return (
+    <Wrapper>
+      <LayoutMypageUI userInfo={userInfo} />
+      <div style={{ width: "90vw" }}>{props.children}</div>
+    </Wrapper>
+  );
 }

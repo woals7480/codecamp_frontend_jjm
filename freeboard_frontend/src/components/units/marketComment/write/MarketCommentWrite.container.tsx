@@ -8,9 +8,14 @@ import * as yup from "yup";
 import {
   IMutation,
   IMutationCreateUseditemQuestionArgs,
+  IQuery,
+  IQueryFetchUseditemQuestionsArgs,
 } from "../../../../commons/types/generated/types";
 import MarketCommentWriteUI from "./MarketCommentWrite.presenter";
-import { CREATE_USEDITEM_QUESTION } from "./MarketCommentWrite.quries";
+import {
+  CREATE_USEDITEM_QUESTION,
+  FETCH_USEDITEM_QUESTIONS,
+} from "./MarketCommentWrite.quries";
 import { IFormData } from "./MarketCommentWrite.types";
 
 const schema = yup
@@ -34,6 +39,16 @@ export default function MarketCommentWrite() {
 
   const onClickSubmit = async (data: IFormData) => {
     try {
+      await clinet.query<
+        Pick<IQuery, "fetchUseditemQuestions">,
+        IQueryFetchUseditemQuestionsArgs
+      >({
+        query: FETCH_USEDITEM_QUESTIONS,
+        variables: {
+          page: 1,
+          useditemId: String(router.query.marketId),
+        },
+      });
       await clinet.mutate<
         Pick<IMutation, "createUseditemQuestion">,
         IMutationCreateUseditemQuestionArgs
@@ -43,9 +58,19 @@ export default function MarketCommentWrite() {
           createUseditemQuestionInput: { contents: data.contents },
           useditemId: String(router.query.marketId),
         },
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              fetchUseditemQuestions: (prev) => {
+                return [data?.createUseditemQuestion, ...prev];
+              },
+            },
+          });
+        },
       });
       Modal.success({ content: "댓글이 등록되었습니다." });
       setValue("contents", "");
+      setContentsLength(0);
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
@@ -57,6 +82,7 @@ export default function MarketCommentWrite() {
 
   return (
     <MarketCommentWriteUI
+      isQnA={false}
       onClickSubmit={onClickSubmit}
       register={register}
       handleSubmit={handleSubmit}

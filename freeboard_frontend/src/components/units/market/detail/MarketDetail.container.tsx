@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   IMutation,
   IMutationToggleUseditemPickArgs,
@@ -8,7 +8,7 @@ import {
   IQueryFetchUseditemArgs,
   IQueryFetchUseditemsIPickedArgs,
 } from "../../../../commons/types/generated/types";
-import { FETCH_USED_ITEMS } from "../list/marketList.queries";
+
 import MarketDetailUI from "./MarketDetail.presenter";
 import {
   FETCH_USEDITEM,
@@ -21,6 +21,7 @@ declare const window: typeof globalThis & {
 };
 
 export default function MarketDetail() {
+  const [isPicked, setIsPicked] = useState(true);
   const router = useRouter();
   const { data } = useQuery<
     Pick<IQuery, "fetchUseditem">,
@@ -75,20 +76,32 @@ export default function MarketDetail() {
         );
       });
     };
+
+    if (
+      dataIPicked?.fetchUseditemsIPicked.filter(
+        (el) => el._id === router.query.marketId
+      ).length !== 1
+    ) {
+      setIsPicked(false);
+    }
   }, [data?.fetchUseditem.useditemAddress?.address]);
 
-  const onClickPick = () => {
-    void toggleUseditemPick({
+  const onClickPick = async () => {
+    await toggleUseditemPick({
       variables: { useditemId: String(router.query.marketId) },
       refetchQueries: [
-        { query: FETCH_USEDITEMS_IPICKED, variables: { search: "" } },
         {
-          query: FETCH_USED_ITEMS,
+          query: FETCH_USEDITEM,
           variables: { useditemId: String(router.query.marketId) },
         },
+        { query: FETCH_USEDITEMS_IPICKED, variables: { search: "" } },
       ],
     });
+
+    setIsPicked((prev) => !prev);
   };
 
-  return <MarketDetailUI data={data} onClickPick={onClickPick} />;
+  return (
+    <MarketDetailUI data={data} onClickPick={onClickPick} isPicked={isPicked} />
+  );
 }

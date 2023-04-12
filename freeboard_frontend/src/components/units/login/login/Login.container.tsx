@@ -1,18 +1,19 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { accessTokenState } from "../../../../commons/store";
+import { accessTokenState, userInfoState } from "../../../../commons/store";
 import {
   IMutation,
   IMutationLoginUserArgs,
 } from "../../../../commons/types/generated/types";
 import LoginUI from "./Login.presenter";
 import { LOGIN_USER } from "./Login.quries";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IFormData } from "./Login.types";
+import { getUserInfo } from "../../../../commons/libraries/getUserInfo";
 
 const schema = yup.object({
   password: yup
@@ -29,7 +30,8 @@ const schema = yup.object({
 });
 
 export default function Login() {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const setAccessToken = useSetRecoilState(accessTokenState);
+  const setUserInfo = useSetRecoilState(userInfoState);
   const router = useRouter();
 
   const [loginUser] = useMutation<
@@ -54,6 +56,10 @@ export default function Login() {
         return;
       }
       setAccessToken(accessToken);
+      void getUserInfo(accessToken).then((userInfo) => {
+        if (userInfo === undefined) return;
+        setUserInfo(JSON.parse(userInfo));
+      });
       void router.push("/boards");
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });

@@ -6,6 +6,7 @@ import {
 } from "../../../../commons/types/generated/types";
 import MarketCommentListUI from "./MarketCommentList.presenter";
 import { FETCH_USEDITEM_QUESTIONS } from "./MarketCommnetList.queries";
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function MarketCommentList() {
   const router = useRouter();
@@ -41,5 +42,20 @@ export default function MarketCommentList() {
     });
   };
 
-  return <MarketCommentListUI data={data} onLoadMore={onLoadMore} />;
+  return (
+    <div style={{ height: "700px", overflow: "auto" }}>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={onLoadMore}
+        hasMore={true}
+        useWindow={false}
+      >
+        <div>
+          {data?.fetchUseditemQuestions.map((el) => (
+            <MarketCommentListUI key={el._id} data={el} />
+          ))}
+        </div>
+      </InfiniteScroll>
+    </div>
+  );
 }

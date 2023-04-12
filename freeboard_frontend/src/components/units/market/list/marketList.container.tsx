@@ -3,10 +3,11 @@ import {
   IQuery,
   IQueryFetchUseditemsArgs,
 } from "../../../../commons/types/generated/types";
-import MarketListUI from "./marketList.presenter";
-import { FETCH_USED_ITEMS } from "./marketList.queries";
+import MarketListUI from "./MarketList.presenter";
+import { FETCH_USED_ITEMS } from "./MarketList.queries";
+import { IMarketListProps } from "./MarketList.types";
 
-export default function MarketList() {
+export default function MarketList(props: IMarketListProps) {
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
@@ -34,5 +35,7 @@ export default function MarketList() {
     });
   };
 
-  return <MarketListUI data={data} onLoadMore={onLoadMore} />;
+  return (
+    <MarketListUI data={data} onLoadMore={onLoadMore} isEdit={props.isEdit} />
+  );
 }

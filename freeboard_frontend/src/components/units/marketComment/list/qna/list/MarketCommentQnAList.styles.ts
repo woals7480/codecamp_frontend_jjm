@@ -1,0 +1,63 @@
+import styled from "@emotion/styled";
+
+export const Wrapper = styled.div`
+  width: ${(props: { WrapperWidth: number }) => props.WrapperWidth}px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ArrowIconWrapper = styled.div``;
+
+export const ArrowIcon = styled.img`
+  width: 20px;
+`;
+
+export const CommentWrapper = styled.div`
+  width: 1096px;
+  height: 128px;
+  margin-right: 100px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const MainWrapper = styled.div`
+  display: flex;
+`;
+
+export const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+`;
+
+export const CommentInfo = styled.div``;
+
+export const WriterWrapper = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+export const Writer = styled.div``;
+
+export const Contents = styled.div`
+  margin-bottom: 20px;
+  color: #4f4f4f;
+`;
+
+export const CreatedAt = styled.div`
+  font-size: 12px;
+  color: #bdbdbd;
+`;
+
+export const OptionWrapper = styled.div``;
+
+export const CommentIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;

@@ -13,7 +13,7 @@ const RESTORE_ACCESS_TOKEN = gql`
 export const getAccessToken = async () => {
   try {
     const graphQLClient = new GraphQLClient(
-      "https://backendonline.codebootcamp.co.kr/graphql",
+      "https://backend-practice.codebootcamp.co.kr/graphql",
       { credentials: "include" }
     );
     const result = await graphQLClient.request<

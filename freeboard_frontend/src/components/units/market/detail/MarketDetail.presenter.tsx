@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { uuidv4 } from "@firebase/util";
 import DomPurify from "dompurify";
+import { useMoveToPage } from "../../../commons/hooks/useMovetoPage";
 
 export default function MarketDetailUI(props: IMarketDetailUIProps) {
   const settings = {
@@ -16,6 +17,8 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  const { onClickMoveToPage } = useMoveToPage();
 
   return (
     <S.Wrapper>
@@ -77,7 +80,12 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
                 )}
               </S.ProductInfo>
               <S.ProductPickedWrapper>
-                <S.PickedIcon onClick={props.onClickPick} />
+                {props.isPicked ? (
+                  <S.PickedIcon onClick={props.onClickPick} />
+                ) : (
+                  <S.NonPickedIcon onClick={props.onClickPick} />
+                )}
+
                 <S.PickedCount>
                   {props.data?.fetchUseditem.pickedCount}
                 </S.PickedCount>
@@ -90,7 +98,7 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
         </S.Body>
       </S.CardWrapper>
       <S.ButtonWrapper>
-        <S.Button>목록으로</S.Button>
+        <S.Button onClick={onClickMoveToPage("/markets")}>목록으로</S.Button>
         <S.Button>수정하기</S.Button>
       </S.ButtonWrapper>
     </S.Wrapper>

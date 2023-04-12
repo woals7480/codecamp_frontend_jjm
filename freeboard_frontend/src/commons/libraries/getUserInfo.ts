@@ -19,7 +19,7 @@ const FETCH_USER_LOGGED_IN = gql`
 export const getUserInfo = async (newAccessToken: string) => {
   try {
     const graphQLClient = new GraphQLClient(
-      "https://backendonline.codebootcamp.co.kr/graphql",
+      "https://backend-practice.codebootcamp.co.kr/graphql",
       {
         headers: { Authorization: `Bearer ${newAccessToken}` },
         credentials: "include",

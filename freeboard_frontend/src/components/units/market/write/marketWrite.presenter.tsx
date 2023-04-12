@@ -1,5 +1,5 @@
-import * as S from "./marketWrite.styles";
-import { IMarketWriteUIProps } from "./marketWrite.types";
+import * as S from "./MarketWrite.styles";
+import { IMarketWriteUIProps } from "./MarketWrite.types";
 import { v4 as uuidv4 } from "uuid";
 import Uploads02 from "../../../commons/uploads/02/Uploads02.container";
 
