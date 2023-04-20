@@ -3,7 +3,7 @@ import MyitemsPage from "../../../../src/components/units/mypage/mymarket/myitem
 
 export default function Myitems() {
   return (
-    <LayoutMypage>
+    <LayoutMypage page={"mymarket"}>
       <MyitemsPage />
     </LayoutMypage>
   );

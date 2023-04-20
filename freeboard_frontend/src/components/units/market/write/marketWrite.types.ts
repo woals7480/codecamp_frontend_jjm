@@ -5,6 +5,7 @@ import {
   UseFormHandleSubmit,
   FormState,
 } from "react-hook-form";
+import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IFormData {
   name: string;
@@ -16,8 +17,14 @@ export interface IFormData {
   addressDetail: string;
 }
 
+export interface IMarketWriteProps {
+  isEdit: boolean;
+  data?: Pick<IQuery, "fetchUseditem">;
+}
+
 export interface IMarketWriteUIProps {
   onClickSubmit: (data: IFormData) => void;
+  onClickEdit: (data: IFormData) => void;
   register: UseFormRegister<IFormData>;
   handleSubmit: UseFormHandleSubmit<IFormData>;
   formState: FormState<IFormData>;
@@ -28,4 +35,6 @@ export interface IMarketWriteUIProps {
   imageUrls: string[];
   fileRef: RefObject<HTMLInputElement>;
   onChangeFileUrls: (fileUrl: string, file: File, index: number) => void;
+  data?: Pick<IQuery, "fetchUseditem">;
+  isEdit: boolean;
 }

@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
 import { accessTokenState, userInfoState } from "../../../../commons/store";
-import { gql, useApolloClient } from "@apollo/client";
+import { gql, useApolloClient, useMutation } from "@apollo/client";
 import {
   IMutation,
   IMutationCreatePointTransactionOfLoadingArgs,
@@ -13,6 +13,12 @@ const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
   mutation createPointTransactionOfLoading($impUid: ID!) {
     createPointTransactionOfLoading(impUid: $impUid) {
       _id
+      amount
+      balance
+      status
+      statusDetail
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -38,6 +44,11 @@ export default function PaymentButtonPage() {
   const userInfo = useRecoilValue(userInfoState);
   const accessToken = useRecoilValue(accessTokenState);
   const client = useApolloClient();
+  // const [createPointTransactionOfLoading] = useMutation<
+  //   Pick<IMutation, "createPointTransactionOfLoading">,
+  //   IMutationCreatePointTransactionOfLoadingArgs
+  // >(CREATE_POINT_TRANSACTION_OF_LOADING);
+
   console.log(userInfo);
   console.log(accessToken);
 
@@ -62,15 +73,19 @@ export default function PaymentButtonPage() {
       async (rsp: any) => {
         if (rsp.success) {
           console.log(rsp);
-          await client.mutate<
-            Pick<IMutation, "createPointTransactionOfLoading">,
-            IMutationCreatePointTransactionOfLoadingArgs
-          >({
-            mutation: CREATE_POINT_TRANSACTION_OF_LOADING,
-            variables: { impUid: rsp.imp_uid },
-          });
-
-          Modal.success({ content: "결제에 성공하였습니다." });
+          try {
+            const result = await client.mutate<
+              Pick<IMutation, "createPointTransactionOfLoading">,
+              IMutationCreatePointTransactionOfLoadingArgs
+            >({
+              mutation: CREATE_POINT_TRANSACTION_OF_LOADING,
+              variables: { impUid: rsp.imp_uid },
+            });
+            Modal.success({ content: "결제에 성공하였습니다." });
+            console.log(result.data?.createPointTransactionOfLoading);
+          } catch (error) {
+            if (error instanceof Error) Modal.error({ content: error.message });
+          }
         } else {
           Modal.error({ content: "결제에 실패했습니다! 다시 시도해 주세요!" });
         }

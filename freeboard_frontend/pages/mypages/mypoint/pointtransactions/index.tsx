@@ -3,7 +3,7 @@ import PointTransactionsPage from "../../../../src/components/units/mypage/mypoi
 
 export default function PointTransactions() {
   return (
-    <LayoutMypage>
+    <LayoutMypage page={"mypoint"}>
       <PointTransactionsPage />
     </LayoutMypage>
   );

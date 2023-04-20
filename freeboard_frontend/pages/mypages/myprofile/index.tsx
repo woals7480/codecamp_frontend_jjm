@@ -3,7 +3,7 @@ import MyProfilePage from "../../../src/components/units/mypage/myprofile/MyProf
 
 export default function MyProfile() {
   return (
-    <LayoutMypage>
+    <LayoutMypage page={"myprofile"}>
       <MyProfilePage />
     </LayoutMypage>
   );

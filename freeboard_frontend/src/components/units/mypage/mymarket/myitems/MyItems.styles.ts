@@ -44,23 +44,23 @@ export const Row = styled.div`
 `;
 
 export const ColumnHeaderBasic = styled.div`
-  width: 13%;
+  width: 12%;
   text-align: center;
 `;
 export const ColumnHeaderTitle = styled.div`
-  width: 61%;
+  width: 52%;
   text-align: center;
 `;
 
 export const ColumnBasic = styled.div`
-  width: 13%;
+  width: 12%;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `;
 export const ColumnTitle = styled.div`
-  width: 61%;
+  width: 52%;
   text-align: center;
   cursor: pointer;
 `;
@@ -85,6 +85,13 @@ export const Button = styled.button`
   :hover {
     background-color: #f5f2fc;
   }
+`;
+
+export const EditButton = styled.button`
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 `;
 
 export const PencilIcon = styled.img``;

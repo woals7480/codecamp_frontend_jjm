@@ -9,7 +9,13 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
       <S.Wrapper>
         <S.Title>상품 등록하기</S.Title>
         <S.WriterWrapper>
-          <S.WriterForm onSubmit={props.handleSubmit(props.onClickSubmit)}>
+          <S.WriterForm
+            onSubmit={
+              props.isEdit
+                ? props.handleSubmit(props.onClickEdit)
+                : props.handleSubmit(props.onClickSubmit)
+            }
+          >
             <>
               {props.isOpen && (
                 <S.AddressModal
@@ -47,7 +53,10 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
             </S.InputWrapper>
             <S.InputWrapper>
               <S.Label>상품설명</S.Label>
-              <S.ContentsInput onChange={props.onChangeContents} />
+              <S.ContentsInput
+                onChange={props.onChangeContents}
+                defaultValue={props.data?.fetchUseditem.contents ?? ""}
+              />
               <S.InputError>
                 {props.formState.errors.contents?.message}
               </S.InputError>
@@ -96,7 +105,9 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
               </S.ImageWrapper>
             </S.InputWrapper>
             <S.ButtonWrapper>
-              <S.SubmitButton>등록하기</S.SubmitButton>
+              <S.SubmitButton>
+                {props.isEdit ? "수정하기" : "등록하기"}
+              </S.SubmitButton>
             </S.ButtonWrapper>
           </S.WriterForm>
         </S.WriterWrapper>

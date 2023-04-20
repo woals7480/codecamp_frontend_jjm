@@ -4,7 +4,7 @@ import MyPickedPage from "../../../../src/components/units/mypage/mymarket/mypic
 
 export default function MyPicked() {
   return (
-    <LayoutMypage>
+    <LayoutMypage page={"mymarket"}>
       <MyPickedPage />
     </LayoutMypage>
   );

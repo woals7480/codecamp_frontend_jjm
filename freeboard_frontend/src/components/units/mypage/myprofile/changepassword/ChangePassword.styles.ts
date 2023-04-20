@@ -37,4 +37,5 @@ export const ChangeButton = styled.button`
   height: 42px;
   border: none;
   background-color: #bdbdbd;
+  cursor: pointer;
 `;

@@ -8,4 +8,6 @@ export interface ILayoutMypageUIProps {
       amount: number;
     };
   };
+
+  page: string;
 }

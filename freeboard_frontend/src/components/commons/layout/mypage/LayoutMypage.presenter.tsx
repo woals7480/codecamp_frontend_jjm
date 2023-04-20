@@ -25,31 +25,55 @@ export default function LayoutMypageUI(props: ILayoutMypageUIProps) {
       <S.OptionWrapper>
         <S.Option>
           <S.OptionIcon>
+            <SmileOutlined />
+          </S.OptionIcon>
+          {props.page === "myprofile" ? (
+            <S.SelectOptionTitle
+              onClick={onClickMoveToPage("/mypages/myprofile")}
+            >
+              내 프로필
+            </S.SelectOptionTitle>
+          ) : (
+            <S.OptionTitle onClick={onClickMoveToPage("/mypages/myprofile")}>
+              내 프로필
+            </S.OptionTitle>
+          )}
+        </S.Option>
+        <S.Option>
+          <S.OptionIcon>
             <ShoppingCartOutlined />
           </S.OptionIcon>
-          <S.OptionTitle
-            onClick={onClickMoveToPage("/mypages/mymarket/myitems")}
-          >
-            내 장터
-          </S.OptionTitle>
+          {props.page === "mymarket" ? (
+            <S.SelectOptionTitle
+              onClick={onClickMoveToPage("/mypages/mymarket/myitems")}
+            >
+              내 장터
+            </S.SelectOptionTitle>
+          ) : (
+            <S.OptionTitle
+              onClick={onClickMoveToPage("/mypages/mymarket/myitems")}
+            >
+              내 장터
+            </S.OptionTitle>
+          )}
         </S.Option>
         <S.Option>
           <S.OptionIcon>
             <DollarCircleOutlined />
           </S.OptionIcon>
-          <S.OptionTitle
-            onClick={onClickMoveToPage("/mypages/mypoint/pointtransactions")}
-          >
-            내 포인트
-          </S.OptionTitle>
-        </S.Option>
-        <S.Option>
-          <S.OptionIcon>
-            <SmileOutlined />
-          </S.OptionIcon>
-          <S.OptionTitle onClick={onClickMoveToPage("/mypages/myprofile")}>
-            내 프로필
-          </S.OptionTitle>
+          {props.page === "mypoint" ? (
+            <S.SelectOptionTitle
+              onClick={onClickMoveToPage("/mypages/mypoint/pointtransactions")}
+            >
+              내 포인트
+            </S.SelectOptionTitle>
+          ) : (
+            <S.OptionTitle
+              onClick={onClickMoveToPage("/mypages/mypoint/pointtransactions")}
+            >
+              내 포인트
+            </S.OptionTitle>
+          )}
         </S.Option>
       </S.OptionWrapper>
     </S.Wrapper>

@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 
 interface ILayoutMypageProps {
   children: JSX.Element;
+  page: string;
 }
 
 const Wrapper = styled.div`
@@ -17,7 +18,7 @@ export default function LayoutMypage(props: ILayoutMypageProps) {
 
   return (
     <Wrapper>
-      <LayoutMypageUI userInfo={userInfo} />
+      <LayoutMypageUI userInfo={userInfo} page={props.page} />
       <div style={{ width: "90vw" }}>{props.children}</div>
     </Wrapper>
   );

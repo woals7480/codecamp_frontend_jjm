@@ -2,12 +2,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import MarketWriteUI from "./MarketWrite.presenter";
 import * as yup from "yup";
-import { IFormData } from "./MarketWrite.types";
-import { useMutation } from "@apollo/client";
-import { CREATE_USEDITEM, UPLOAD_FILE } from "./MarketWrite.queries";
+import { IFormData, IMarketWriteProps } from "./MarketWrite.types";
+import { useApolloClient, useMutation } from "@apollo/client";
+import {
+  CREATE_USEDITEM,
+  FETCH_USED_ITEMS,
+  UPDATE_USED_ITEM,
+  UPLOAD_FILE,
+} from "./MarketWrite.queries";
 import {
   IMutation,
   IMutationCreateUseditemArgs,
+  IMutationUpdateUseditemArgs,
   IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
 import { useRouter } from "next/router";
@@ -32,12 +38,36 @@ const schema = yup.object({
     .required("상품가격을 입력해주세요."),
 });
 
-export default function MarketWrite() {
+export default function MarketWrite(props: IMarketWriteProps) {
   const { register, handleSubmit, formState, trigger, setValue } =
     useForm<IFormData>({
       resolver: yupResolver(schema),
       mode: "onChange",
+      defaultValues: {
+        name: props.data?.fetchUseditem.name
+          ? props.data?.fetchUseditem.name
+          : "",
+        remarks: props.data?.fetchUseditem.remarks
+          ? props.data?.fetchUseditem.remarks
+          : "",
+        contents: props.data?.fetchUseditem.contents
+          ? props.data?.fetchUseditem.contents
+          : "",
+        price: props.data?.fetchUseditem.price
+          ? Number(props.data?.fetchUseditem.price)
+          : 0,
+        zipcode: props.data?.fetchUseditem.useditemAddress?.zipcode
+          ? props.data?.fetchUseditem.useditemAddress?.zipcode
+          : "",
+        address: props.data?.fetchUseditem.useditemAddress?.address
+          ? props.data?.fetchUseditem.useditemAddress?.address
+          : "",
+        addressDetail: props.data?.fetchUseditem.useditemAddress?.addressDetail
+          ? props.data?.fetchUseditem.useditemAddress?.addressDetail
+          : "",
+      },
     });
+  const client = useApolloClient();
   const [createUseditem] = useMutation<
     Pick<IMutation, "createUseditem">,
     IMutationCreateUseditemArgs
@@ -51,7 +81,11 @@ export default function MarketWrite() {
   const [mapAddress, SetMapAddress] = useState(
     "제주특별자치도 제주시 첨단로 242"
   );
-  const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [imageUrls, setImageUrls] = useState([
+    props.data?.fetchUseditem.images[0] ?? "",
+    props.data?.fetchUseditem.images[1] ?? "",
+    props.data?.fetchUseditem.images[2] ?? "",
+  ]);
   const [files, setFiles] = useState<File[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -130,10 +164,55 @@ export default function MarketWrite() {
             images: resultUrls,
           },
         },
+        refetchQueries: [{ query: FETCH_USED_ITEMS }],
       });
       Modal.success({ content: "상품등록에 성공하셨습니다." });
-
       void router.push("/markets");
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
+    }
+  };
+
+  const onClickEdit = async (data: IFormData) => {
+    const results = await Promise.all(
+      files.map((el) => el && uploadFile({ variables: { file: el } }))
+    );
+
+    const resultUrls: Array<string | undefined> = props.data?.fetchUseditem
+      .images
+      ? [...props.data?.fetchUseditem.images]
+      : [];
+
+    results.forEach(
+      (el, index) =>
+        (resultUrls[index] = el ? el.data?.uploadFile.url : resultUrls[index])
+    );
+
+    try {
+      await client.mutate<
+        Pick<IMutation, "updateUseditem">,
+        IMutationUpdateUseditemArgs
+      >({
+        mutation: UPDATE_USED_ITEM,
+        variables: {
+          useditemId: String(router.query.marketId),
+          updateUseditemInput: {
+            name: data.name,
+            remarks: data.remarks,
+            contents: data.contents,
+            price: Number(data.price),
+            useditemAddress: {
+              zipcode: data.zipcode,
+              address: data.address,
+              addressDetail: data.addressDetail,
+            },
+            images: resultUrls.map((el) => (el === undefined ? "" : el)),
+          },
+        },
+        refetchQueries: [{ query: FETCH_USED_ITEMS }],
+      });
+      Modal.success({ content: "상품수정에 성공하셨습니다." });
+      void router.push("/mypages/mymarket/myitems");
     } catch (error) {
       if (error instanceof Error) Modal.error({ content: error.message });
     }
@@ -144,7 +223,6 @@ export default function MarketWrite() {
   };
 
   const onCompleteAddressSearch = async (data: Address) => {
-    console.log(data);
     setValue("zipcode", data.zonecode);
     setValue("address", data.address);
 
@@ -158,6 +236,7 @@ export default function MarketWrite() {
     <MarketWriteUI
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
+      onClickEdit={onClickEdit}
       register={register}
       handleSubmit={handleSubmit}
       formState={formState}
@@ -167,6 +246,8 @@ export default function MarketWrite() {
       imageUrls={imageUrls}
       fileRef={fileRef}
       onChangeFileUrls={onChangeFileUrls}
+      data={props.data}
+      isEdit={props.isEdit}
     />
   );
 }

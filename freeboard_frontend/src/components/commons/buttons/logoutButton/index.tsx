@@ -1,7 +1,7 @@
 import { gql, useApolloClient } from "@apollo/client";
 import styled from "@emotion/styled";
 import { useSetRecoilState } from "recoil";
-import { accessTokenState } from "../../../../commons/store";
+import { accessTokenState, userInfoState } from "../../../../commons/store";
 
 const LogoutButton = styled.button`
   font-weight: bold;
@@ -21,12 +21,14 @@ const LOGOUT_USER = gql`
 export default function LogoutButtonPage() {
   const client = useApolloClient();
   const setAccessToken = useSetRecoilState(accessTokenState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const onClickLogout = async () => {
     await client.mutate({
       mutation: LOGOUT_USER,
     });
     setAccessToken("");
+    setUserInfo({});
   };
 
   return (

@@ -3,7 +3,7 @@ import ChangePasswordPage from "../../../../src/components/units/mypage/myprofil
 
 export default function ChangePassword() {
   return (
-    <LayoutMypage>
+    <LayoutMypage page={"myprofile"}>
       <ChangePasswordPage />
     </LayoutMypage>
   );

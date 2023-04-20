@@ -37,12 +37,15 @@ export default function MyitemsPageUI(props: IMyitemsPageUIProps) {
         <S.ColumnHeaderTitle>상품명</S.ColumnHeaderTitle>
         <S.ColumnHeaderBasic>판매가격</S.ColumnHeaderBasic>
         <S.ColumnHeaderBasic>날짜</S.ColumnHeaderBasic>
+        <S.ColumnHeaderBasic></S.ColumnHeaderBasic>
       </S.Row>
 
       {props.data?.fetchUseditemsISold.map((el, index) => (
-        <S.Row key={el._id} onClick={props.onClickonBoardDetail(el._id)}>
-          <S.ColumnBasic>{index + 1}</S.ColumnBasic>
-          <S.ColumnTitle>
+        <S.Row key={el._id}>
+          <S.ColumnBasic onClick={props.onClickonBoardDetail(el._id)}>
+            {index + 1}
+          </S.ColumnBasic>
+          <S.ColumnTitle onClick={props.onClickonBoardDetail(el._id)}>
             {el.name
               .replaceAll(props.keyword, `@%^*${props.keyword}@%^*`)
               .split("@%^*")
@@ -52,8 +55,17 @@ export default function MyitemsPageUI(props: IMyitemsPageUIProps) {
                 </S.TextToken>
               ))}
           </S.ColumnTitle>
-          <S.ColumnBasic>{el.price}</S.ColumnBasic>
+          <S.ColumnBasic onClick={props.onClickonBoardDetail(el._id)}>
+            {el.price}
+          </S.ColumnBasic>
           <S.ColumnBasic>{getDate(el.createdAt)}</S.ColumnBasic>
+          <S.ColumnBasic>
+            <S.EditButton
+              onClick={onClickMoveToPage(`/markets/${el._id}/edit`)}
+            >
+              수정하기
+            </S.EditButton>
+          </S.ColumnBasic>
         </S.Row>
       ))}
       <S.TableBottom />

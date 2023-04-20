@@ -60,4 +60,11 @@ export const OptionIcon = styled.div`
 export const OptionTitle = styled.div`
   font-size: 20px;
   cursor: pointer;
+  color: #bdbdbd;
+`;
+
+export const SelectOptionTitle = styled.div`
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
 `;

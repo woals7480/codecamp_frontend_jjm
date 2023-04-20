@@ -99,7 +99,6 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
       </S.CardWrapper>
       <S.ButtonWrapper>
         <S.Button onClick={onClickMoveToPage("/markets")}>목록으로</S.Button>
-        <S.Button>수정하기</S.Button>
       </S.ButtonWrapper>
     </S.Wrapper>
   );
