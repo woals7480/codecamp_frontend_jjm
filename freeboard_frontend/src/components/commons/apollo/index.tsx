@@ -3,9 +3,7 @@ import {
   ApolloLink,
   ApolloProvider,
   fromPromise,
-  gql,
   InMemoryCache,
-  useQuery,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
@@ -23,8 +21,7 @@ const GLOBAL_STATE = new InMemoryCache();
 
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
-  // const setUserInfo = useSetRecoilState(userInfoState);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   useEffect(() => {
     void getAccessToken().then((newAccessToken) => {
@@ -37,8 +34,6 @@ export default function ApolloSetting(props: IApolloSettingProps) {
       });
     });
   }, []);
-  console.log(accessToken);
-  console.log(userInfo);
 
   const errorLink = onError(({ graphQLErrors, operation, forward }) => {
     if (graphQLErrors) {

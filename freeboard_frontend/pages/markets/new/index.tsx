@@ -4,5 +4,5 @@ import MarketWrite from "../../../src/components/units/market/write/MarketWrite.
 export default function MarketWWritePage() {
   useAuth();
 
-  return <MarketWrite />;
+  return <MarketWrite isEdit={false} />;
 }

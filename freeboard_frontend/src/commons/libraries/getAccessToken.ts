@@ -1,4 +1,3 @@
-import { Modal } from "antd";
 import { GraphQLClient, gql } from "graphql-request";
 import { IMutation } from "../types/generated/types";
 
