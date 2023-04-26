@@ -29,6 +29,7 @@ export default function LogoutButtonPage() {
     });
     setAccessToken("");
     setUserInfo({});
+    await client.resetStore();
   };
 
   return (

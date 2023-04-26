@@ -1,5 +1,6 @@
 import { GraphQLClient, gql } from "graphql-request";
 import { IMutation } from "../types/generated/types";
+import { Modal } from "antd";
 
 const RESTORE_ACCESS_TOKEN = gql`
   mutation restoreAccessToken {
@@ -22,7 +23,9 @@ export const getAccessToken = async () => {
     return newAccessToken;
   } catch (error) {
     if (error instanceof Error) {
-      process.exit?.(1);
+      // Modal.error({ content: error.message });
+      // alert(error.message);
+      // process.exit?.(1);
     }
   }
 };

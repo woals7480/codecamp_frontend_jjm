@@ -1,17 +1,19 @@
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { accessTokenState } from "../../../commons/store";
+import { restoreAccessTokenLoadable } from "../../../commons/store";
+import { useRecoilValueLoadable } from "recoil";
 
 export function useAuth() {
-  const accessToken = useRecoilValue(accessTokenState);
   const router = useRouter();
+  const aaa = useRecoilValueLoadable(restoreAccessTokenLoadable);
 
   useEffect(() => {
-    if (!accessToken) {
-      Modal.error({ content: "로그인 후 이용가능합니다." });
-      void router.push("/login");
-    }
+    void aaa.toPromise().then((newAccessToken) => {
+      if (newAccessToken === undefined) {
+        Modal.error({ content: "로그인 후 이용가능합니다." });
+        void router.push("/login");
+      }
+    });
   }, []);
 }

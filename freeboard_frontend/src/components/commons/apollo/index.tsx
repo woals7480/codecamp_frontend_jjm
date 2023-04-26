@@ -7,8 +7,16 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
-import { accessTokenState, userInfoState } from "../../../commons/store";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  accessTokenState,
+  restoreAccessTokenLoadable,
+  userInfoState,
+} from "../../../commons/store";
+import {
+  useRecoilState,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from "recoil";
 import { useEffect } from "react";
 import { getAccessToken } from "../../../commons/libraries/getAccessToken";
 import { getUserInfo } from "../../../commons/libraries/getUserInfo";
@@ -22,12 +30,13 @@ const GLOBAL_STATE = new InMemoryCache();
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const setUserInfo = useSetRecoilState(userInfoState);
+  const aaa = useRecoilValueLoadable(restoreAccessTokenLoadable);
 
   useEffect(() => {
-    void getAccessToken().then((newAccessToken) => {
-      if (newAccessToken === undefined) return;
-      setAccessToken(newAccessToken);
+    void aaa.toPromise().then((newAccessToken) => {
+      setAccessToken(newAccessToken ?? "");
 
+      if (newAccessToken === undefined) return;
       void getUserInfo(newAccessToken).then((userInfo) => {
         if (userInfo === undefined) return;
         setUserInfo(JSON.parse(userInfo));
@@ -41,8 +50,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
         if (err.extensions.code === "UNAUTHENTICATED") {
           return fromPromise(
             getAccessToken().then((newAccessToken) => {
-              if (newAccessToken === undefined) return;
-              setAccessToken(newAccessToken);
+              setAccessToken(newAccessToken ?? "");
 
               if (typeof newAccessToken !== "string") return;
               operation.setContext({

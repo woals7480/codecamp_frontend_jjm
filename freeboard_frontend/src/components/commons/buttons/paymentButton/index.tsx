@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Modal } from "antd";
 import Head from "next/head";
 import { useRecoilValue } from "recoil";
-import { accessTokenState, userInfoState } from "../../../../commons/store";
-import { gql, useApolloClient, useMutation } from "@apollo/client";
+import { userInfoState } from "../../../../commons/store";
+import { gql, useApolloClient } from "@apollo/client";
 import {
   IMutation,
   IMutationCreatePointTransactionOfLoadingArgs,
@@ -36,25 +36,31 @@ const PaymentButton = styled.button`
   cursor: pointer;
 `;
 
+const FETCH_USER_LOGGED_IN = gql`
+  query fetchUserLoggedIn {
+    fetchUserLoggedIn {
+      _id
+      email
+      name
+      userPoint {
+        _id
+        amount
+      }
+    }
+  }
+`;
+
 declare const window: typeof globalThis & {
   IMP: any;
 };
 
 export default function PaymentButtonPage() {
   const userInfo = useRecoilValue(userInfoState);
-  const accessToken = useRecoilValue(accessTokenState);
   const client = useApolloClient();
-  // const [createPointTransactionOfLoading] = useMutation<
-  //   Pick<IMutation, "createPointTransactionOfLoading">,
-  //   IMutationCreatePointTransactionOfLoadingArgs
-  // >(CREATE_POINT_TRANSACTION_OF_LOADING);
-
-  console.log(userInfo);
-  console.log(accessToken);
 
   const onClickPayment = () => {
     const IMP = window.IMP;
-    IMP.init("imp45415662");
+    IMP.init("imp49910675");
 
     IMP.request_pay(
       {
@@ -62,8 +68,8 @@ export default function PaymentButtonPage() {
         pay_method: "card",
         name: "포인트 충전",
         amount: 100,
-        buyer_email: "gildong@gmail.com",
-        buyer_name: "홍길동",
+        buyer_email: userInfo.email,
+        buyer_name: userInfo.name,
         buyer_tel: "010-4242-4242",
         buyer_addr: "서울특별시 강남구 신사동",
         buyer_postcode: "01181",
@@ -72,7 +78,6 @@ export default function PaymentButtonPage() {
       },
       async (rsp: any) => {
         if (rsp.success) {
-          console.log(rsp);
           try {
             const result = await client.mutate<
               Pick<IMutation, "createPointTransactionOfLoading">,
@@ -80,6 +85,7 @@ export default function PaymentButtonPage() {
             >({
               mutation: CREATE_POINT_TRANSACTION_OF_LOADING,
               variables: { impUid: rsp.imp_uid },
+              refetchQueries: [{ query: FETCH_USER_LOGGED_IN }],
             });
             Modal.success({ content: "결제에 성공하였습니다." });
             console.log(result.data?.createPointTransactionOfLoading);
