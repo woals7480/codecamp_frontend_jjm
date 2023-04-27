@@ -8,12 +8,14 @@ export interface ITextTokenProps {
   isMatched: boolean;
 }
 
-export interface IPointTransactionsPageUIProps {
-  data?: Pick<IQuery, "fetchPointTransactions">;
+export interface ITransactionsLoadingPageUIProps {
+  data?: Pick<IQuery, "fetchPointTransactionsOfLoading">;
   count: number;
   refetch: (
     variables?: Partial<IQueryFetchPointTransactionsArgs> | undefined
-  ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchPointTransactions">>>;
+  ) => Promise<
+    ApolloQueryResult<Pick<IQuery, "fetchPointTransactionsOfLoading">>
+  >;
 }
 
 export interface IColumnProps {

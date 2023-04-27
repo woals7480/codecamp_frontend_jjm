@@ -2,28 +2,28 @@ import { getDate } from "../../../../../commons/utils/utils";
 import PaymentButtonPage from "../../../../commons/buttons/paymentButton";
 import { useMoveToPage } from "../../../../commons/hooks/useMovetoPage";
 import Pagination02 from "../../../../commons/pagination/02/Pagination02.container";
-import * as S from "./PointTransactions.styles";
-import { IPointTransactionsPageUIProps } from "./PointTransactions.types";
+import * as S from "./TransactionsLoading.styles";
+import { ITransactionsLoadingPageUIProps } from "./TransactionsLoading.types";
 
-export default function PointTransactionsPageUI(
-  props: IPointTransactionsPageUIProps
+export default function TransactionsLoadingPageUI(
+  props: ITransactionsLoadingPageUIProps
 ) {
   const { onClickMoveToPage } = useMoveToPage();
   return (
     <S.Wrapper>
       <S.TopWrapper>
         <S.OptionWrapper>
-          <S.OptionCurrentPage
+          <S.OptionNonCurrentPage
             onClick={onClickMoveToPage("/mypages/mypoint/pointtransactions")}
           >
             전체내역
-          </S.OptionCurrentPage>
+          </S.OptionNonCurrentPage>
           <span style={{ margin: "0 10px" }}> | </span>
-          <S.OptionNonCurrentPage
+          <S.OptionCurrentPage
             onClick={onClickMoveToPage("/mypages/mypoint/transactionsloading")}
           >
             충전내역
-          </S.OptionNonCurrentPage>
+          </S.OptionCurrentPage>
           <span style={{ margin: "0 10px" }}> | </span>
           <S.OptionNonCurrentPage
             onClick={onClickMoveToPage("/mypages/mypoint/transactionsbuying")}
@@ -41,17 +41,17 @@ export default function PointTransactionsPageUI(
       </S.TopWrapper>
       <S.TableTop />
       <S.Row>
-        <S.ColumnHeaderBasic>날짜</S.ColumnHeaderBasic>
-        <S.ColumnHeaderBasic>내용</S.ColumnHeaderBasic>
-        <S.ColumnHeaderBasic>거래 및 충전내역</S.ColumnHeaderBasic>
-        <S.ColumnHeaderBasic>잔액</S.ColumnHeaderBasic>
+        <S.ColumnHeaderBasic>충전일</S.ColumnHeaderBasic>
+        <S.ColumnHeaderBasic>결제ID</S.ColumnHeaderBasic>
+        <S.ColumnHeaderBasic>충전내역</S.ColumnHeaderBasic>
+        <S.ColumnHeaderBasic>충전 후 잔액</S.ColumnHeaderBasic>
       </S.Row>
 
-      {props.data?.fetchPointTransactions.map((el) => (
+      {props.data?.fetchPointTransactionsOfLoading.map((el) => (
         <S.Row key={el._id}>
           <S.ColumnBasic>{getDate(el.createdAt)}</S.ColumnBasic>
-          <S.ColumnStatus isStatus={el.status}>{el.status}</S.ColumnStatus>
-          <S.ColumnStatus isStatus={el.status}>{el.amount}</S.ColumnStatus>
+          <S.ColumnBasic>{el.impUid}</S.ColumnBasic>
+          <S.ColumnBasic>{el.amount}</S.ColumnBasic>
           <S.ColumnBasic>{`₩ ${el.balance.toLocaleString()}원`}</S.ColumnBasic>
         </S.Row>
       ))}

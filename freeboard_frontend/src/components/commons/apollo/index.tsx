@@ -7,16 +7,8 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { createUploadLink } from "apollo-upload-client";
-import {
-  accessTokenState,
-  restoreAccessTokenLoadable,
-  userInfoState,
-} from "../../../commons/store";
-import {
-  useRecoilState,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from "recoil";
+import { accessTokenState, userInfoState } from "../../../commons/store";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { getAccessToken } from "../../../commons/libraries/getAccessToken";
 import { getUserInfo } from "../../../commons/libraries/getUserInfo";
@@ -30,13 +22,12 @@ const GLOBAL_STATE = new InMemoryCache();
 export default function ApolloSetting(props: IApolloSettingProps) {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const setUserInfo = useSetRecoilState(userInfoState);
-  const aaa = useRecoilValueLoadable(restoreAccessTokenLoadable);
 
   useEffect(() => {
-    void aaa.toPromise().then((newAccessToken) => {
+    void getAccessToken().then((newAccessToken) => {
       setAccessToken(newAccessToken ?? "");
 
-      if (newAccessToken === undefined) return;
+      if (!newAccessToken) return;
       void getUserInfo(newAccessToken).then((userInfo) => {
         if (userInfo === undefined) return;
         setUserInfo(JSON.parse(userInfo));
@@ -75,6 +66,7 @@ export default function ApolloSetting(props: IApolloSettingProps) {
   const client = new ApolloClient({
     link: ApolloLink.from([errorLink, uploadLink as unknown as ApolloLink]),
     cache: GLOBAL_STATE,
+    connectToDevTools: true,
   });
 
   // prettier-ignore

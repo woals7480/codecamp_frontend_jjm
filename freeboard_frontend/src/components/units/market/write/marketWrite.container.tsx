@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import MarketWriteUI from "./MarketWrite.presenter";
+import MarketWriteUI from "./marketWrite.presenter";
 import * as yup from "yup";
-import { IFormData, IMarketWriteProps } from "./MarketWrite.types";
+import { IFormData, IMarketWriteProps } from "./marketWrite.types";
 import { useApolloClient, useMutation } from "@apollo/client";
 import {
   CREATE_USEDITEM,
   FETCH_USED_ITEMS,
   UPDATE_USED_ITEM,
   UPLOAD_FILE,
-} from "./MarketWrite.queries";
+} from "./marketWrite.queries";
 import {
   IMutation,
   IMutationCreateUseditemArgs,
@@ -141,7 +141,9 @@ export default function MarketWrite(props: IMarketWriteProps) {
 
   const onClickSubmit = async (data: IFormData) => {
     const results = await Promise.all(
-      files.map((el) => el && uploadFile({ variables: { file: el } }))
+      files.map(
+        async (el) => el && (await uploadFile({ variables: { file: el } }))
+      )
     );
 
     const resultUrls = results.map((el) =>
@@ -175,7 +177,9 @@ export default function MarketWrite(props: IMarketWriteProps) {
 
   const onClickEdit = async (data: IFormData) => {
     const results = await Promise.all(
-      files.map((el) => el && uploadFile({ variables: { file: el } }))
+      files.map(
+        async (el) => el && (await uploadFile({ variables: { file: el } }))
+      )
     );
 
     const resultUrls: Array<string | undefined> = props.data?.fetchUseditem

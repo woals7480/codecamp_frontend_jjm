@@ -1,6 +1,7 @@
 import { ApolloQueryResult } from "@apollo/client";
 import {
   IQuery,
+  IQueryFetchPointTransactionsArgs,
   IQueryFetchUseditemsIPickedArgs,
   IQueryFetchUseditemsISoldArgs,
 } from "../../../../commons/types/generated/types";
@@ -13,9 +14,15 @@ export interface IPagination02Props {
       | Partial<IQueryFetchUseditemsIPickedArgs>
       | undefined
       | Partial<IQueryFetchUseditemsISoldArgs>
+      | Partial<IQueryFetchPointTransactionsArgs>
+      | Partial<IQueryFetchPointTransactionsArgs>
   ) =>
     | Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditemsIPicked">>>
-    | Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditemsISold">>>;
+    | Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditemsISold">>>
+    | Promise<ApolloQueryResult<Pick<IQuery, "fetchPointTransactions">>>
+    | Promise<
+        ApolloQueryResult<Pick<IQuery, "fetchPointTransactionsOfLoading">>
+      >;
 }
 
 export interface IPagination02UIProps {

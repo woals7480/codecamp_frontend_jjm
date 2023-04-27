@@ -3,9 +3,9 @@ import {
   IQuery,
   IQueryFetchUseditemsArgs,
 } from "../../../../commons/types/generated/types";
-import MarketListUI from "./MarketList.presenter";
-import { FETCH_USED_ITEMS } from "./MarketList.queries";
-import { IMarketListProps } from "./MarketList.types";
+import MarketListUI from "./marketList.presenter";
+import { FETCH_USED_ITEMS } from "./marketList.queries";
+import { IMarketListProps } from "./marketList.types";
 
 export default function MarketList(props: IMarketListProps) {
   const { data, fetchMore } = useQuery<

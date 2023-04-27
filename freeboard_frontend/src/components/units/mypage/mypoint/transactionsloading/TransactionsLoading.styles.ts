@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { IColumnProps, ITextTokenProps } from "./PointTransactions.types";
+import { IColumnProps, ITextTokenProps } from "./TransactionsLoading.types";
 
 export const Wrapper = styled.div`
   width: 100%;

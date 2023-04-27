@@ -1,5 +1,4 @@
-import { atom, selector } from "recoil";
-import { getAccessToken } from "../libraries/getAccessToken";
+import { atom } from "recoil";
 
 interface IUserInfoProps {
   _id?: string;
@@ -19,12 +18,4 @@ export const accessTokenState = atom({
 export const userInfoState = atom<IUserInfoProps>({
   key: "userInfoState",
   default: {},
-});
-
-export const restoreAccessTokenLoadable = selector({
-  key: "restoreAccessTokenLoadable",
-  get: async () => {
-    const newAccessToken = await getAccessToken();
-    return newAccessToken;
-  },
 });
