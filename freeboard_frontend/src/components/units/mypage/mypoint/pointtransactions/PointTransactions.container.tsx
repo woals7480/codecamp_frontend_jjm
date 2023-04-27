@@ -29,10 +29,6 @@ export default function PointTransactionsPage() {
     Pick<IQuery, "fetchPointTransactionsCountOfSelling">
   >(FETCH_POINT_TRANSACTIONS_COUNT_OF_SELLING);
 
-  console.log(loadingCountData?.fetchPointTransactionsCountOfLoading);
-  console.log(buyingCountData?.fetchPointTransactionsCountOfBuying);
-  console.log(sellingCountData?.fetchPointTransactionsCountOfSelling);
-
   const count =
     (loadingCountData?.fetchPointTransactionsCountOfLoading ?? 0) +
     (buyingCountData?.fetchPointTransactionsCountOfBuying ?? 0) +

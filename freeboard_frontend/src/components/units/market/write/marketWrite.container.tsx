@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import MarketWriteUI from "./marketWrite.presenter";
+import MarketWriteUI from "./MarketWrite.presenter";
 import * as yup from "yup";
-import { IFormData, IMarketWriteProps } from "./marketWrite.types";
+import { IFormData, IMarketWriteProps } from "./MarketWrite.types";
 import { useApolloClient, useMutation } from "@apollo/client";
 import {
   CREATE_USEDITEM,
   FETCH_USED_ITEMS,
   UPDATE_USED_ITEM,
   UPLOAD_FILE,
-} from "./marketWrite.queries";
+} from "./MarketWrite.queries";
 import {
   IMutation,
   IMutationCreateUseditemArgs,
