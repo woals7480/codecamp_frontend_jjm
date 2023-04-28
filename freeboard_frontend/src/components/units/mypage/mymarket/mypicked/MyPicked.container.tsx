@@ -35,8 +35,6 @@ export default function MyPickedPage() {
   const onChangeKeyword = (value: string) => {
     setKeyword(value);
   };
-  console.log(dataIPickedCount?.fetchUseditemsCountIPicked);
-  console.log(data?.fetchUseditemsIPicked);
 
   return (
     <MyitemsPageUI

@@ -46,10 +46,24 @@ export const Row = styled.div`
 export const ColumnHeaderBasic = styled.div`
   width: 12%;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 export const ColumnHeaderTitle = styled.div`
-  width: 52%;
+  width: 32%;
   text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+`;
+
+export const ColumnHeaderSoldout = styled.div`
+  width: 20%;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 export const ColumnBasic = styled.div`
@@ -59,10 +73,21 @@ export const ColumnBasic = styled.div`
   overflow: hidden;
   white-space: nowrap;
 `;
+
 export const ColumnTitle = styled.div`
-  width: 52%;
-  text-align: center;
+  width: 32%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+`;
+
+export const ColumnSoldout = styled.div`
+  width: 20%;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: red;
 `;
 
 export const Footer = styled.div`

@@ -35,6 +35,7 @@ export default function MyitemsPageUI(props: IMyitemsPageUIProps) {
       <S.Row>
         <S.ColumnHeaderBasic>번호</S.ColumnHeaderBasic>
         <S.ColumnHeaderTitle>상품명</S.ColumnHeaderTitle>
+        <S.ColumnHeaderSoldout></S.ColumnHeaderSoldout>
         <S.ColumnHeaderBasic>판매가격</S.ColumnHeaderBasic>
         <S.ColumnHeaderBasic>날짜</S.ColumnHeaderBasic>
         <S.ColumnHeaderBasic></S.ColumnHeaderBasic>
@@ -55,6 +56,7 @@ export default function MyitemsPageUI(props: IMyitemsPageUIProps) {
                 </S.TextToken>
               ))}
           </S.ColumnTitle>
+          <S.ColumnSoldout>{el.soldAt && "판매완료"}</S.ColumnSoldout>
           <S.ColumnBasic onClick={props.onClickonBoardDetail(el._id)}>
             {el.price}
           </S.ColumnBasic>

@@ -1,5 +1,11 @@
+import MarketBestitemsPage from "../../src/components/units/market/best/MarketBestitems.container";
 import MarketList from "../../src/components/units/market/list/MarketList.container";
 
 export default function MarketsListPage() {
-  return <MarketList isEdit={false} />;
+  return (
+    <>
+      <MarketBestitemsPage />
+      <MarketList isEdit={false} />;
+    </>
+  );
 }

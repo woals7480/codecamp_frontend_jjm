@@ -3,6 +3,7 @@ import LayoutHeader from "./header/LayoutHeader.container";
 import LayoutNavigation from "./navigation/LayoutNavigation.container";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import LayoutViewitems from "./viewitems/LayoutViewitems.container";
 
 const Body = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ export default function Layout(props: ILayoutProps) {
       <LayoutHeader />
       {!isHiddenBanner && <LayoutBanner />}
       {!isHiddenNavigation && <LayoutNavigation />}
+      <LayoutViewitems />
       <Body>{props.children}</Body>
     </>
   );
