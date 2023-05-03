@@ -27,7 +27,6 @@ export default function Layout(props: ILayoutProps) {
       <LayoutHeader />
       {!isHiddenBanner && <LayoutBanner />}
       {!isHiddenNavigation && <LayoutNavigation />}
-      <LayoutViewitems />
       <Body>{props.children}</Body>
     </>
   );

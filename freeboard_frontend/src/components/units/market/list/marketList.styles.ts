@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
+import { ISoldout } from "./MarketList.types";
 
 export const Wrapper = styled.div`
   width: 1200px;
   margin: 100px;
+  position: relative;
 `;
 
 export const InfiniteScrollWrapper = styled.div`
@@ -100,3 +102,86 @@ export const Button = styled.button`
 `;
 
 export const PencilIcon = styled.img``;
+
+export const ViewItemsWrapper = styled.div`
+  width: 192px;
+  border: 1px solid #bdbdbd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  right: -320px;
+  top: 0;
+`;
+
+export const ViewItemsTitle = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
+
+export const ViewitemWrapper = styled.div`
+  width: 156px;
+  border: 1px solid #bdbdbd;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+export const ViewitemPickedWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const ViewitemPickedIcon = styled.div`
+  color: gold;
+  margin-right: 5px;
+`;
+export const ViewitemPickedCount = styled.div``;
+
+export const ViewitemImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+export const ViewitemImage = styled.img`
+  width: 80px;
+  height: 80px;
+`;
+
+export const ViewitemNoImage = styled.div`
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #bdbdbd;
+`;
+
+export const ViewitemText = styled.div``;
+
+export const ViewitemName = styled.div`
+  font-size: 12px;
+  margin-bottom: 5px;
+`;
+export const ViewitemRemarks = styled.div`
+  font-size: 12px;
+  margin-bottom: 5px;
+`;
+export const ViewitemPrice = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const SoldoutWrapper = styled.div`
+  margin: 10px;
+`;
+
+export const SoldoutText = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+  color: ${(props: ISoldout) => (props.isSold ? "gold" : "black")};
+  cursor: pointer;
+`;

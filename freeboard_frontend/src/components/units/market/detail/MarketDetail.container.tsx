@@ -15,6 +15,7 @@ import {
   FETCH_USEDITEMS_IPICKED,
   TOGGLE_USEDITEM_PICK,
 } from "./MarketDetail.queries";
+import { getViewitem } from "../../../../commons/libraries/getViewitem";
 
 declare const window: typeof globalThis & {
   kakao: any;
@@ -84,6 +85,8 @@ export default function MarketDetail() {
     ) {
       setIsPicked(false);
     }
+
+    getViewitem(data?.fetchUseditem);
   }, [data?.fetchUseditem.useditemAddress?.address]);
 
   const onClickPick = async () => {
