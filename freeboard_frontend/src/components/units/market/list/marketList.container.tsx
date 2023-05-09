@@ -38,12 +38,14 @@ export default function MarketList(props: IMarketListProps) {
   };
 
   useEffect(() => {
-    const viewItems = JSON.parse(localStorage.getItem("viewItem") ?? "").filter(
-      (el: IViewItem) => {
+    if (sessionStorage.getItem("viewItem") !== null) {
+      const viewItems = JSON.parse(
+        sessionStorage.getItem("viewItem") ?? ""
+      ).filter((el: IViewItem) => {
         return el !== null;
-      }
-    );
-    setViewItemsList(viewItems);
+      });
+      setViewItemsList(viewItems);
+    }
   }, []);
 
   const onClickSoldoutItem = () => {

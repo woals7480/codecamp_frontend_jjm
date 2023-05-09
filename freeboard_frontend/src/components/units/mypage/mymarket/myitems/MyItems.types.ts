@@ -20,4 +20,5 @@ export interface IMyitemsPageUIProps {
     variables?: Partial<OperationVariables> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchUseditemsCountISold">>>;
   count?: number;
+  prefetchitem: (useditemId: string) => () => void;
 }

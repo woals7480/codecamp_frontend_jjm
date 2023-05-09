@@ -45,7 +45,7 @@ export const Row = styled.div`
 `;
 
 export const ColumnHeaderBasic = styled.div`
-  width: 20%;
+  width: 25%;
   text-align: center;
 `;
 
@@ -63,7 +63,7 @@ export const ChargingButton = styled.button`
 `;
 
 export const ColumnBasic = styled.div`
-  width: 20%;
+  width: 25%;
   text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;

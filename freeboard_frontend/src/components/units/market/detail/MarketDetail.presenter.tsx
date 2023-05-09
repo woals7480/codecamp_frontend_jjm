@@ -27,9 +27,11 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
           <S.AvatarWrapper>
             <S.Avatar src="/images/avatar.png" />
             <S.Info>
-              <S.Writer>판매자</S.Writer>
+              <S.Writer>
+                {props.dataUseditem?.fetchUseditem.seller?.name}
+              </S.Writer>
               <S.CreatedAt>
-                Date: {getDate(props.data?.fetchUseditem.createdAt)}
+                Date: {getDate(props.dataUseditem?.fetchUseditem.createdAt)}
               </S.CreatedAt>
             </S.Info>
           </S.AvatarWrapper>
@@ -37,9 +39,10 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
             <S.LinkIcon src="/images/board/detail/link.png" />
             <Tooltip
               title={`${
-                props.data?.fetchUseditem.useditemAddress?.address ?? ""
+                props.dataUseditem?.fetchUseditem.useditemAddress?.address ?? ""
               } ${
-                props.data?.fetchUseditem.useditemAddress?.addressDetail ?? ""
+                props.dataUseditem?.fetchUseditem.useditemAddress
+                  ?.addressDetail ?? ""
               }`}
             >
               <S.LocationIcon src="/images/board/detail/location.png" />
@@ -49,7 +52,7 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
         <S.Body>
           <S.ProductDetailWrapper>
             <Slider {...settings}>
-              {props.data?.fetchUseditem.images?.map((el) => (
+              {props.dataUseditem?.fetchUseditem.images?.map((el) => (
                 <div key={uuidv4()}>
                   <S.ProductImage
                     src={`https://storage.googleapis.com/${el}`}
@@ -59,21 +62,23 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
             </Slider>
             <S.ProductDetail>
               <S.ProductInfo>
-                <S.ProductName>{props.data?.fetchUseditem.name}</S.ProductName>
+                <S.ProductName>
+                  {props.dataUseditem?.fetchUseditem.name}
+                </S.ProductName>
                 <S.ProductRemarks>
-                  {props.data?.fetchUseditem.remarks}
+                  {props.dataUseditem?.fetchUseditem.remarks}
                 </S.ProductRemarks>
                 <S.ProductPrice>
-                  {props.data?.fetchUseditem.price
+                  {props.dataUseditem?.fetchUseditem.price
                     ?.toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   원
                 </S.ProductPrice>
-                {props.data && (
+                {props.dataUseditem && (
                   <S.ProductContents
                     dangerouslySetInnerHTML={{
                       __html: DomPurify.sanitize(
-                        props.data.fetchUseditem.contents
+                        props.dataUseditem.fetchUseditem.contents
                       ),
                     }}
                   ></S.ProductContents>
@@ -87,7 +92,7 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
                 )}
 
                 <S.PickedCount>
-                  {props.data?.fetchUseditem.pickedCount}
+                  {props.dataUseditem?.fetchUseditem.pickedCount}
                 </S.PickedCount>
               </S.ProductPickedWrapper>
             </S.ProductDetail>
@@ -99,6 +104,7 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
       </S.CardWrapper>
       <S.ButtonWrapper>
         <S.Button onClick={onClickMoveToPage("/markets")}>목록으로</S.Button>
+        <S.Button onClick={props.onClickBuying}>구매하기</S.Button>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

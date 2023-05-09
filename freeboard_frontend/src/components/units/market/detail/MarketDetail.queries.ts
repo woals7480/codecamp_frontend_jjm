@@ -16,6 +16,10 @@ export const FETCH_USEDITEM = gql`
         addressDetail
       }
       createdAt
+      seller {
+        _id
+        name
+      }
     }
   }
 `;
@@ -31,6 +35,14 @@ export const FETCH_USEDITEMS_IPICKED = gql`
     fetchUseditemsIPicked(search: $search) {
       _id
       pickedCount
+    }
+  }
+`;
+
+export const CREATE_POINT_TRANSACTION_OF_BUYING_AND_SELLING = gql`
+  mutation createPointTransactionOfBuyingAndSelling($useritemId: ID!) {
+    createPointTransactionOfBuyingAndSelling(useritemId: $useritemId) {
+      _id
     }
   }
 `;

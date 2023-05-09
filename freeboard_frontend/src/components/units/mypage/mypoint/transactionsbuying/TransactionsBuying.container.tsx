@@ -16,11 +16,11 @@ export default function TransactionsBuyingPage() {
   >(FETCH_POINT_TRANSACTIONS_OF_BUYING);
 
   const { data: buyingCountData } = useQuery<
-    Pick<IQuery, "fetchPointTransactionsCountOfSelling">
+    Pick<IQuery, "fetchPointTransactionsCountOfBuying">
   >(FETCH_POINT_TRANSACTIONS_COUNT_OF_BUYING);
 
-  const count = buyingCountData?.fetchPointTransactionsCountOfSelling ?? 0;
-
+  const count = buyingCountData?.fetchPointTransactionsCountOfBuying ?? 0;
+  console.log(data?.fetchPointTransactionsOfBuying);
   return (
     <TransactionsBuyingPageUI data={data} count={count} refetch={refetch} />
   );

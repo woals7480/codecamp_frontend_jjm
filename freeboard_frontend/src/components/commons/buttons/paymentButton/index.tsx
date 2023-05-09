@@ -1,24 +1,21 @@
 import styled from "@emotion/styled";
-import { Modal } from "antd";
+import { Button, Modal, Select } from "antd";
 import Head from "next/head";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userInfoState } from "../../../../commons/store";
-import { gql, useApolloClient } from "@apollo/client";
+import { gql, useApolloClient, useQuery } from "@apollo/client";
 import {
   IMutation,
   IMutationCreatePointTransactionOfLoadingArgs,
+  IQuery,
 } from "../../../../commons/types/generated/types";
+import { useState } from "react";
 
 const CREATE_POINT_TRANSACTION_OF_LOADING = gql`
   mutation createPointTransactionOfLoading($impUid: ID!) {
     createPointTransactionOfLoading(impUid: $impUid) {
       _id
-      amount
       balance
-      status
-      statusDetail
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -55,9 +52,22 @@ declare const window: typeof globalThis & {
 };
 
 export default function PaymentButtonPage() {
-  const userInfo = useRecoilValue(userInfoState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const client = useApolloClient();
+  const [isOpen, setIsOpen] = useState(false);
+  const [amount, setAmount] = useState(100);
+  const { data: dataUserLoggedIn } =
+    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
+  const amountOptions = [
+    { value: 100, label: "100원" },
+    { value: 500, label: "500원" },
+    { value: 1000, label: "1000원" },
+    { value: 5000, label: "5000원" },
+  ];
 
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
   const onClickPayment = () => {
     const IMP = window.IMP;
     IMP.init("imp49910675");
@@ -67,7 +77,7 @@ export default function PaymentButtonPage() {
         pg: "nice",
         pay_method: "card",
         name: "포인트 충전",
-        amount: 100,
+        amount,
         buyer_email: userInfo.email,
         buyer_name: userInfo.name,
         buyer_tel: "010-4242-4242",
@@ -85,10 +95,31 @@ export default function PaymentButtonPage() {
             >({
               mutation: CREATE_POINT_TRANSACTION_OF_LOADING,
               variables: { impUid: rsp.imp_uid },
-              refetchQueries: [{ query: FETCH_USER_LOGGED_IN }],
+              update(cache, { data }) {
+                cache.writeQuery({
+                  query: FETCH_USER_LOGGED_IN,
+                  data: {
+                    fetchUserLoggedIn: {
+                      UserPoint: {
+                        __typename: "UserPoint",
+                        _id: dataUserLoggedIn?.fetchUserLoggedIn.userPoint?._id,
+                        amount: data?.createPointTransactionOfLoading.amount,
+                      },
+                    },
+                  },
+                });
+              },
             });
+
             Modal.success({ content: "결제에 성공하였습니다." });
-            console.log(result.data?.createPointTransactionOfLoading);
+            setUserInfo({
+              ...userInfo,
+              userPoint: {
+                _id: userInfo.userPoint?._id ?? "",
+                amount:
+                  result.data?.createPointTransactionOfLoading.balance ?? 0,
+              },
+            });
           } catch (error) {
             if (error instanceof Error) Modal.error({ content: error.message });
           }
@@ -97,8 +128,14 @@ export default function PaymentButtonPage() {
         }
       }
     );
+    setIsOpen((prev) => !prev);
+    setAmount(100);
   };
 
+  const onChangeValue = (value: number) => {
+    setAmount(value);
+  };
+  console.log(userInfo);
   return (
     <>
       <Head>
@@ -111,7 +148,54 @@ export default function PaymentButtonPage() {
           src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"
         ></script>
       </Head>
-      <PaymentButton onClick={onClickPayment}>포인트 충전</PaymentButton>
+      {isOpen && (
+        <Modal
+          open={true}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+          onCancel={onToggleModal}
+          footer={[
+            <Button
+              key="payment"
+              style={{
+                width: "100%",
+                backgroundColor: "#bdbdbd",
+                color: "white",
+                height: "52px",
+              }}
+              onClick={onClickPayment}
+            >
+              충전하기
+            </Button>,
+          ]}
+        >
+          <div style={{ textAlign: "center", padding: "40px" }}>
+            <img src="/images/pigIcon.png" />
+          </div>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "20px",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            충전하실 금액을 선택해주세요!
+          </div>
+          <Select
+            style={{
+              width: "384px",
+            }}
+            defaultValue={100}
+            options={amountOptions}
+            onChange={onChangeValue}
+          />
+        </Modal>
+      )}
+      <PaymentButton onClick={onToggleModal}>포인트 충전</PaymentButton>
     </>
   );
 }

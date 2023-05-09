@@ -17,3 +17,22 @@ export const FETCH_USEDITEMS_COUNT_ISOLD = gql`
     fetchUseditemsCountISold
   }
 `;
+
+export const FETCH_USEDITEM = gql`
+  query fetchUseditem($useditemId: ID!) {
+    fetchUseditem(useditemId: $useditemId) {
+      _id
+      name
+      remarks
+      contents
+      price
+      images
+      useditemAddress {
+        _id
+        zipcode
+        address
+        addressDetail
+      }
+    }
+  }
+`;

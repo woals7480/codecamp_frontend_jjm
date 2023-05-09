@@ -45,7 +45,6 @@ export default function TransactionsBuyingPageUI(
         <S.ColumnHeaderBasic>상품명</S.ColumnHeaderBasic>
         <S.ColumnHeaderBasic>거래내역</S.ColumnHeaderBasic>
         <S.ColumnHeaderBasic>거래 후 잔액</S.ColumnHeaderBasic>
-        <S.ColumnHeaderBasic>판매자</S.ColumnHeaderBasic>
       </S.Row>
 
       {props.data?.fetchPointTransactionsOfBuying.map((el) => (
@@ -57,7 +56,6 @@ export default function TransactionsBuyingPageUI(
           <S.ColumnBasic>{el.useditem?.name}</S.ColumnBasic>
           <S.ColumnBasic>{el.amount}</S.ColumnBasic>
           <S.ColumnBasic>{`₩ ${el.balance.toLocaleString()}원`}</S.ColumnBasic>
-          <S.ColumnBasic>{el.user?.name}</S.ColumnBasic>
         </S.Row>
       ))}
       <S.TableBottom />

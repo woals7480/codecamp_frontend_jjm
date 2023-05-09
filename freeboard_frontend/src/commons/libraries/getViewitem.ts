@@ -17,7 +17,7 @@ type IViewItem = Array<
 
 export const getViewitem = (viewItem: IUseditem | undefined) => {
   const viewItems: IViewItem = JSON.parse(
-    localStorage.getItem("viewItem") ?? "[]"
+    sessionStorage.getItem("viewItem") ?? "[]"
   );
 
   const temp = viewItems.filter((el) => el?._id === viewItem?._id);
@@ -25,5 +25,5 @@ export const getViewitem = (viewItem: IUseditem | undefined) => {
     return;
   }
   viewItems.push(viewItem);
-  localStorage.setItem("viewItem", JSON.stringify(viewItems));
+  sessionStorage.setItem("viewItem", JSON.stringify(viewItems));
 };

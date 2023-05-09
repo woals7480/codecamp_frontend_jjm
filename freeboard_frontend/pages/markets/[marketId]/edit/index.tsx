@@ -36,7 +36,5 @@ export default function MarketEditPage() {
     },
   });
 
-  console.log(router.query.marketId);
-  console.log(data?.fetchUseditem);
   return <MarketWrite isEdit={true} data={data} />;
 }

@@ -64,6 +64,7 @@ export default function MyitemsPageUI(props: IMyitemsPageUIProps) {
           <S.ColumnBasic>
             <S.EditButton
               onClick={onClickMoveToPage(`/markets/${el._id}/edit`)}
+              onMouseOver={props.prefetchitem(el._id)}
             >
               수정하기
             </S.EditButton>

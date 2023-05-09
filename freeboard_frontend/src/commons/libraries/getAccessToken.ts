@@ -10,7 +10,7 @@ const RESTORE_ACCESS_TOKEN = gql`
   }
 `;
 
-export const getAccessToken = async () => {
+export const getAccessToken = async (): Promise<string | undefined> => {
   try {
     const graphQLClient = new GraphQLClient(
       "https://backend-practice.codebootcamp.co.kr/graphql",
@@ -23,9 +23,7 @@ export const getAccessToken = async () => {
     return newAccessToken;
   } catch (error) {
     if (error instanceof Error) {
-      // Modal.error({ content: error.message });
-      // alert(error.message);
-      // process.exit?.(1);
+      Modal.error({ content: error.message });
     }
   }
 };
