@@ -57,9 +57,9 @@ export default function StaticRoutedPage() {
           fields: {
             fetchBoards: (prev, { readField }) => {
               const deletedId = data.deleteBoard; // 삭제된 ID
-              console.log(deletedId);
+              console.log(data);
               const filteredPrev = prev.filter(
-                (el) => readField("_id", el) !== deletedId // el._id가 안되므로, readFiled를 사용해서 꺼내오기
+                (el: any) => readField("_id", el) !== deletedId // el._id가 안되므로, readFiled를 사용해서 꺼내오기
               );
               return [...filteredPrev]; // 삭제된 ID를 제외한 나머지 9기만 리턴
             },
@@ -80,7 +80,8 @@ export default function StaticRoutedPage() {
         },
       },
       update(cache, { data }) {
-        console.log(data.createBoard);
+        console.log(data);
+        console.log(cache.modify);
         cache.modify({
           fields: {
             fetchBoards: (prev) => {

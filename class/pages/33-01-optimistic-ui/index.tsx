@@ -39,6 +39,7 @@ export default function OptimisticUIPage() {
         likeBoard: (data?.fetchBoard.likeCount ?? 0) + 1,
       },
       update(cache, { data }) {
+        console.log(data);
         cache.writeQuery({
           query: FETCH_BOARD,
           variables: { boardId: "640375f61182750028ee74be" },
