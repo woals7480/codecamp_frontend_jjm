@@ -24,7 +24,7 @@ export const OptionMyitems = styled.span`
 export const OptionMyPicked = styled.span`
   cursor: pointer;
   font-weight: bold;
-  border-bottom: 2px solid #5729ff;
+  border-bottom: 2px solid #f94a4a;
 `;
 
 export const TableTop = styled.div`

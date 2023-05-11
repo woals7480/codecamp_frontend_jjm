@@ -3,7 +3,6 @@ import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/router";
 import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
 import { CREATE_BOARDCOMMENT } from "./BoardCommentWrite.queries";
-import { FETCH_BOARDCOMMENTS } from "../list/BoardCommentList.querie";
 import {
   IMutation,
   IMutationCreateBoardCommentArgs,
@@ -44,12 +43,15 @@ export default function BoardCommentWrite() {
           },
           boardId: String(router.query.boardId),
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARDCOMMENTS,
-            variables: { boardId: router.query.boardId },
-          },
-        ],
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              fetchBoardComments: (prev) => {
+                return [data?.createBoardComment, ...prev];
+              },
+            },
+          });
+        },
       });
       Modal.success({ content: "댓글이 등록되었습니다." });
     } catch (error) {

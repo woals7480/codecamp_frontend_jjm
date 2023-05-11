@@ -100,17 +100,8 @@ export default function MarketDetail() {
           query: FETCH_USEDITEM,
           data: {
             fetchUseditem: {
-              _id: String(router.query.marketId),
-              __typename: "Useditem",
+              ...dataUseditem?.fetchUseditem,
               pickedCount: data?.toggleUseditemPick,
-              name: dataUseditem?.fetchUseditem.name,
-              remarks: dataUseditem?.fetchUseditem.remarks,
-              contents: dataUseditem?.fetchUseditem.contents,
-              price: dataUseditem?.fetchUseditem.price,
-              images: dataUseditem?.fetchUseditem.images,
-              useditemAddress: dataUseditem?.fetchUseditem.useditemAddress,
-              createdAt: dataUseditem?.fetchUseditem.createdAt,
-              seller: dataUseditem?.fetchUseditem.seller,
             },
           },
         });

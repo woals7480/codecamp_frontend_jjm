@@ -15,7 +15,7 @@ export const Logo = styled.span`
   font-size: 30px;
   font-weight: bold;
   font-style: italic;
-  color: #5729ff;
+  color: #f94a4a;
   cursor: pointer;
 `;
 
@@ -26,7 +26,7 @@ export const ButtonWrapper = styled.div`
 export const Button = styled.span`
   font-weight: bold;
   margin: 10px;
-  color: #5729ff;
+  color: gray;
   cursor: pointer;
 `;
 

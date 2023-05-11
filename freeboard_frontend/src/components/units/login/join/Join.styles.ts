@@ -37,7 +37,7 @@ export const JoinButton = styled.button`
   font-size: 16px;
   border: none;
   font-weight: bold;
-  background-color: #5729ff;
+  background-color: #f94a4a;
   color: white;
   cursor: pointer;
   margin-top: 20px;

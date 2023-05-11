@@ -1,9 +1,11 @@
 import { getDate } from "../../../../commons/utils/utils";
+import { useMoveToPage } from "../../../commons/hooks/useMovetoPage";
 import * as S from "./BoardDetail.styles";
 import { IBoardDetailUIProps } from "./BoardDetail.types";
 import { Tooltip } from "antd";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
+  const { onClickMoveToPage } = useMoveToPage();
   return (
     <S.Wrapper>
       <S.CardWrapper>
@@ -63,8 +65,14 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
         </S.Body>
       </S.CardWrapper>
       <S.ButtonWrapper>
-        <S.Button onClick={props.onClickMoveToBoardList}>목록으로</S.Button>
-        <S.Button onClick={props.onClickMoveToBoardEdit}>수정하기</S.Button>
+        <S.Button onClick={onClickMoveToPage("/boards")}>목록으로</S.Button>
+        <S.Button
+          onClick={onClickMoveToPage(
+            `/boards/${String(props.data?.fetchBoard._id)}/edit`
+          )}
+        >
+          수정하기
+        </S.Button>
         <S.Button onClick={props.onClickDeleteBoard}>삭제하기</S.Button>
       </S.ButtonWrapper>
     </S.Wrapper>

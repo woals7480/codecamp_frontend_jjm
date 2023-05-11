@@ -26,7 +26,7 @@ const PaymentButton = styled.button`
   height: 40px;
   border-radius: 10px;
   border: none;
-  background-color: #917be5;
+  background-color: #f94a4a;
   color: #fff;
   font-size: 16px;
   font-weight: bold;

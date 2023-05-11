@@ -19,7 +19,7 @@ export const OptionWrapper = styled.div`
 
 export const OptionMyitems = styled.span`
   font-weight: bold;
-  border-bottom: 2px solid #5729ff;
+  border-bottom: 2px solid #f94a4a;
   cursor: pointer;
 `;
 

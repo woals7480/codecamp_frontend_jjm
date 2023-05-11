@@ -6,7 +6,7 @@ import { accessTokenState, userInfoState } from "../../../../commons/store";
 const LogoutButton = styled.button`
   font-weight: bold;
   margin: 20px;
-  color: #5729ff;
+  color: #f94a4a;
   cursor: pointer;
   border: none;
   background-color: transparent;

@@ -8,7 +8,7 @@ export default function LayoutHeaderUI(props: ILayoutHeaderUIProps) {
   return (
     <S.Wrapper>
       <S.LogoWrapper>
-        <S.Logo onClick={onClickMoveToPage("/boards")}>💎 LIVE</S.Logo>
+        <S.Logo onClick={onClickMoveToPage("/boards")}>🍓 딸기마켓</S.Logo>
       </S.LogoWrapper>
       {props.accessToken ? (
         <S.LoggedInWrapper>

@@ -10,7 +10,7 @@ export const ColumnTitle = styled.div`
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 50px;
-  color: #5729ff;
+  color: #f94a4a;
 `;
 
 export const Column = styled.div`

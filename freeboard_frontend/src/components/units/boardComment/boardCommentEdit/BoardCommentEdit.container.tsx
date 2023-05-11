@@ -2,7 +2,6 @@ import BoardCommentEditUI from "./BoardCommentEdit.presenter";
 import { IBoardCommnetEditProps } from "./BoardCommentEdit.types";
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
-import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import {
   IMutation,
@@ -13,10 +12,8 @@ import {
   DELETE_BOARDCOMMENT,
   UPDATE_BOARDCOMMENT,
 } from "./BoardCommentEdit.queried";
-import { FETCH_BOARDCOMMENTS } from "../list/BoardCommentList.querie";
 
 export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
-  const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
   const [password, setPassword] = useState("");
   const [rating, setRating] = useState(props.el.rating);
@@ -57,12 +54,19 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
             contents,
           },
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARDCOMMENTS,
-            variables: { boardId: router.query.boardId },
-          },
-        ],
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              fetchBoardComments: (prev, { readField }) => {
+                const updatedId = data?.updateBoardComment;
+                const filteredPrev = prev.filter(
+                  (el: any) => readField("_id", el) !== updatedId
+                );
+                return [...filteredPrev, data?.updateBoardComment];
+              },
+            },
+          });
+        },
       });
       Modal.success({ content: "댓글이 수정되었습니다." });
       setIsEdit((prev) => !prev);
@@ -78,12 +82,19 @@ export default function BoardCommentEdit(props: IBoardCommnetEditProps) {
           password: myPassword,
           boardCommentId: props.el._id,
         },
-        refetchQueries: [
-          {
-            query: FETCH_BOARDCOMMENTS,
-            variables: { boardId: router.query.boardId },
-          },
-        ],
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              fetchBoardComments: (prev, { readField }) => {
+                const deletedId = data?.deleteBoardComment;
+                const filteredPrev = prev.filter(
+                  (el: any) => readField("_id", el) !== deletedId
+                );
+                return [...filteredPrev];
+              },
+            },
+          });
+        },
       });
       Modal.success({ content: "댓글이 삭제되었습니다." });
     } catch (error) {

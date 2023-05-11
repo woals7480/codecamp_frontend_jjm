@@ -29,7 +29,7 @@ export const LoginButton = styled.button`
   font-size: 18px;
   border: none;
   font-weight: bold;
-  background-color: #5729ff;
+  background-color: #f94a4a;
   color: white;
   margin-bottom: 10px;
   cursor: pointer;
