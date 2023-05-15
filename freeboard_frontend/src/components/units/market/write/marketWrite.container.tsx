@@ -82,9 +82,9 @@ export default function MarketWrite(props: IMarketWriteProps) {
     "제주특별자치도 제주시 첨단로 242"
   );
   const [imageUrls, setImageUrls] = useState([
-    props.data?.fetchUseditem.images[0] ?? "",
-    props.data?.fetchUseditem.images[1] ?? "",
-    props.data?.fetchUseditem.images[2] ?? "",
+    props.data?.fetchUseditem.images ? props.data?.fetchUseditem.images[0] : "",
+    props.data?.fetchUseditem.images ? props.data?.fetchUseditem.images[1] : "",
+    props.data?.fetchUseditem.images ? props.data?.fetchUseditem.images[2] : "",
   ]);
   const [files, setFiles] = useState<File[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
